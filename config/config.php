@@ -52,9 +52,9 @@ $config = [
      * URL Base da Aplicação
      * (Não coloque a barra "/" no final)
      */
-    'app_url' => (APP_ENV === 'development') 
-                    ? 'http://localhost:8000'  // URL de desenvolvimento
-                    : 'https://localhost:8000' // URL de produção (exemplo)
+    'app_url' => (APP_ENV === 'development')
+        ? 'http://localhost/PortalAcademico-FIAP/public'
+        : 'https://localhost/PortalAcademico-FIAP/public'
 ];
 
 /**
