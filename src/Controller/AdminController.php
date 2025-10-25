@@ -28,6 +28,6 @@ class AdminController
         ];
 
         // Carrega a view do dashboard e passa os dados para ela
-        // require __DIR__ . '/../View/admin/dashboard.php';
+        require __DIR__ . '/../View/admin/dashboard.php';
     }
 }
