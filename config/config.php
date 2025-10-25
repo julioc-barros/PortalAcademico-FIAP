@@ -11,8 +11,9 @@ date_default_timezone_set('America/Sao_Paulo');
  * 'development': Mostra todos os erros.
  * 'production': Esconde os erros.
  */
-define('APP_ENV', 'development'); // Mude para 'production' no servidor real
-
+if (!defined('APP_ENV')) {
+    define('APP_ENV', 'development'); // Mude para 'production' no servidor real
+}
 
 /**
  * ---------------------------------------------------------------
