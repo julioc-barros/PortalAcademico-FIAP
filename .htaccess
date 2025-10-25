@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Regra 1: Se a requisição for para a pasta /public (ex: o usuário digitou)
+    # redireciona ele para a URL limpa (sem /public)
+    RewriteRule ^public/(.*)$ /$1 [R=301,L]
+
+    # Regra 2: Se a requisição NÃO for para a pasta /public (internamente)
+    RewriteCond %{REQUEST_URI} !^/public/
+    # E NÃO for um arquivo real que existe na raiz (como composer.json)
+    RewriteCond %{REQUEST_FILENAME} !-f 
+    
+    # Re-escreve (internamente) para a pasta /public
+    # /               -> /public/
+    # (O usuário não vê isso, o servidor faz internamente)
+    RewriteRule ^(.*)$ /public/$1 [L]
+</IfModule>

@@ -28,7 +28,22 @@ $config = require_once __DIR__ . '/../config/config.php';
  * DEFINIR CONSTANTES GLOBAIS
  * ---------------------------------------------------------------
  */
-define('APP_URL', $config['app_url']);
+
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
+$host = $_SERVER['HTTP_HOST'];
+
+// $_SERVER['SCRIPT_NAME'] será /public/index.php
+// dirname(dirname()) nos dará a raiz real (/)
+$basePath = dirname(dirname($_SERVER['SCRIPT_NAME']));
+
+// Normaliza barras
+$basePath = str_replace('\\', '/', $basePath);
+
+// Se $basePath for '/', rtrim o remove, ficando só o host
+$baseUrl = rtrim("$protocol://$host" . $basePath, '/');
+
+// Define a constante global
+define('APP_URL', $baseUrl); // Resultado: http://localhost
 
 /**
  * ---------------------------------------------------------------

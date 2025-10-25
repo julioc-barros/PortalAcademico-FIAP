@@ -8,25 +8,12 @@ use PortalAcademicoFIAP\Service\Auth;
 $fullUri = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
-// --- [INÍCIO DA LÓGICA DINÂMICA (Solução Ponto 1)] ---
+$requestUri = parse_url($fullUri, PHP_URL_PATH);
 
-// $_SERVER['SCRIPT_NAME'] no XAMPP será: /PortalAcademico-FIAP/public/index.php
-// A função 'dirname()' pegará apenas a parte do diretório:
-$basePath = dirname($_SERVER['SCRIPT_NAME']); // Resultado: /PortalAcademico-FIAP/public
-
-if (strpos($fullUri, $basePath) === 0) {
-   $uri = substr($fullUri, strlen($basePath));
-} else {
-   $uri = $fullUri;
+// Garante que a URI "raiz" (vazia ou /) seja tratada como "/"
+if (empty($requestUri) || $requestUri === '/') {
+   $requestUri = '/';
 }
-
-// Garante que a URI "raiz" (vazia) seja tratada como "/"
-if (empty($uri)) {
-   $uri = '/';
-}
-
-// Remove a query string (ex: ?id=1) para que o roteamento funcione
-$requestUri = parse_url($uri, PHP_URL_PATH);
 
 // 2. DEFINIÇÃO DAS ROTAS
 $routes = [
@@ -44,7 +31,7 @@ $routes = [
    '/logout' => [
       'GET' => [AuthController::class, 'logout']
    ],
-   
+
 ];
 
 // 3. LÓGICA DO ROTEADOR (Atualizada com Proteção)
@@ -61,8 +48,6 @@ if (array_key_exists($requestUri, $routes)) {
    // 2. Verificar se o método HTTP é permitido
    if (array_key_exists($requestMethod, $routes[$requestUri])) {
 
-      // --- INÍCIO DA PROTEÇÃO (MIDDLEWARE) ---
-
       // Verifica se a rota NÃO é pública E se o usuário NÃO está logado
       if (!in_array($requestUri, $publicRoutes) && !Auth::check()) {
          // Não está logado e tenta acessar rota protegida.
@@ -76,9 +61,7 @@ if (array_key_exists($requestUri, $routes)) {
          header('Location: /');
          exit;
       }
-
-      // --- FIM DA PROTEÇÃO ---
-
+      
       $handler = $routes[$requestUri][$requestMethod];
       $controllerName = $handler[0];
       $methodName = $handler[1];

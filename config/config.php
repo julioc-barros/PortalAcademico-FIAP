@@ -53,8 +53,8 @@ $config = [
      * (Não coloque a barra "/" no final)
      */
     'app_url' => (APP_ENV === 'development')
-        ? 'http://localhost/PortalAcademico-FIAP/public'
-        : 'https://localhost/PortalAcademico-FIAP/public'
+        ? 'http://localhost'
+        : 'https://localhost'
 ];
 
 /**

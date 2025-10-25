@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /public/
+
+    # Se a requisição NÃO for um arquivo real (como css/js)
+    # E NÃO for uma pasta real (como /assets)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Envie para o index.php (nosso roteador)
+    RewriteRule . index.php [L]
+</IfModule>
