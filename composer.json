@@ -1,0 +1,17 @@
+{
+   "name": "fiap/portal-academico",
+   "description": "Desafio PHP de gerenciamento acadêmico da FIAP.",
+   "type": "project",
+   "authors": [
+      {
+         "name": "Julio Barros",
+         "email": "juliocbarros339@gmail.com"
+      }
+   ],
+   "require": {},
+   "autoload": {
+      "psr-4": {
+         "PortalAcademicoFIAP\\": "src/"
+      }
+   }
+}
