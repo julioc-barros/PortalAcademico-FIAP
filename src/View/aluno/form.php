@@ -12,9 +12,6 @@ $email_aluno = $oldInput['email'] ?? ($aluno->email ?? '');
 $tituloPagina = $isEdit ? "Editar Aluno: " . htmlspecialchars($nome_aluno) : "Novo Aluno";
 $formAction = $isEdit ? route('alunos.update') : route('alunos.store');
 
-// Verifica se há erros vindos do controller
-$hasErrors = isset($errors) && !empty($errors);
-
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -86,25 +83,3 @@ $hasErrors = isset($errors) && !empty($errors);
 </form>
 
 <?php require __DIR__ . '/../template/footer.php'; ?>
-
-<?php if ($hasErrors): ?>
-   <script>
-      $(document).ready(function () {
-         // Formata a lista de erros para o Swal
-         let errorHtml = '<ul style="text-align: left; list-style-position: inside;">';
-         <?php foreach ($errors as $error): ?>
-            errorHtml += '<li><?= htmlspecialchars(addslashes($error)); // Escapa aspas ?></li>';
-         <?php endforeach; ?>
-         errorHtml += '</ul>';
-
-         Swal.fire({
-            title: 'Erro de Validação!',
-            html: errorHtml, // Usa HTML para a lista
-            icon: 'error',
-            confirmButtonColor: 'var(--dark-danger)',
-            background: 'var(--dark-bg-secondary)',
-            color: 'var(--dark-text-primary)'
-         });
-      });
-   </script>
-<?php endif; ?>

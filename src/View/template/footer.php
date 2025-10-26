@@ -104,6 +104,79 @@
    });
 </script>
 
+<script>
+   $(document).ready(function () {
+
+      // 1. Exibe Erros de Validação (se existirem)
+      var validationErrors = <?= isset($errors) ? json_encode($errors) : 'null'; ?>;
+      if (validationErrors && validationErrors.length > 0) {
+         let errorHtml = '<ul style="text-align: left; list-style-position: inside;">';
+         validationErrors.forEach(function (error) {
+            let escapedError = $('<div>').text(error).html();
+            errorHtml += '<li>' + escapedError + '</li>';
+         });
+         errorHtml += '</ul>';
+
+         Swal.fire({
+            title: 'Erro de Validação!',
+            html: errorHtml,
+            icon: 'error',
+            confirmButtonColor: 'var(--dark-danger)',
+            background: 'var(--dark-bg-secondary)',
+            color: 'var(--dark-text-primary)'
+         });
+      }
+
+      // 2. Exibe Mensagem de Sucesso (se existir via Flash)
+      var successMessage = <?= isset($success) ? json_encode($success) : 'null'; ?>;
+      if (successMessage) {
+         let title = 'Sucesso!';
+         let text = '';
+         switch (successMessage) {
+            case '1': case 'cadastrado': text = 'Registro cadastrado com sucesso!'; break;
+            case 'atualizado': text = 'Registro atualizado com sucesso!'; break;
+            case 'excluido': text = 'Registro excluído com sucesso!'; break;
+            case 'matriculado': text = 'Aluno matriculado com sucesso!'; break;
+            case 'desmatriculado': text = 'Aluno desmatriculado com sucesso!'; break;
+            default: text = successMessage;
+         }
+         Swal.fire({
+            title: title, text: text, icon: 'success',
+            background: 'var(--dark-bg-secondary)', color: 'var(--dark-text-primary)'
+         });
+      }
+
+      // 3. Exibe Mensagem de Erro Geral (se existir via Flash)
+      var errorMessage = <?= isset($error) ? json_encode($error) : 'null'; ?>;
+      if (errorMessage && !validationErrors) { // Só mostra erro geral se não houver erro de validação
+         let title = 'Erro!';
+         let text = '';
+         switch (errorMessage) {
+            case 'id_invalido': text = 'ID inválido fornecido.'; break;
+            case 'nao_encontrado':
+            case 'aluno_nao_encontrado':
+            case 'turma_nao_encontrada': text = 'Registro não encontrado.'; break;
+            case 'excluir_falhou': text = 'Falha ao excluir. Verifique dependências (ex: alunos matriculados).'; break;
+            case 'falha_desmatricular': text = 'Não foi possível desmatricular o aluno.'; break;
+            case 'invalido':
+            case 'dados_matricula_invalidos':
+            case 'dados_desmatricula_invalidos': text = 'Dados inválidos fornecidos.'; break;
+            case 'acesso_negado': text = 'Acesso negado. Você não tem permissão para acessar esta área.'; break; // Erro do middleware Super Admin
+            default: text = errorMessage;
+         }
+         // Trata erro RN04 especificamente
+         if (text.includes('RN04')) {
+            text = 'Este aluno já está matriculado nesta turma.';
+         }
+         Swal.fire({
+            title: title, text: text, icon: 'error',
+            background: 'var(--dark-bg-secondary)', color: 'var(--dark-text-primary)'
+         });
+      }
+
+   });
+</script>
+
 </body>
 
 </html>

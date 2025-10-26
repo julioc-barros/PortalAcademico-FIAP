@@ -45,7 +45,7 @@ use PortalAcademicoFIAP\Service\Auth;
                         <div id="area-admin" class="collapse">
                             <ul>
                                 <li>
-                                    <a href="<?= route('admin.users') ?>">
+                                    <a href="<?= route('admin.users.index') ?>">
                                         <i class="bi bi-shield-lock me-2"></i> Usuários Admin
                                     </a>
                                 </li>
