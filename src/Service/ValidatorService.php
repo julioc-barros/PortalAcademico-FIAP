@@ -2,6 +2,7 @@
 namespace PortalAcademicoFIAP\Service;
 
 use PortalAcademicoFIAP\Repository\AlunoRepository;
+use PortalAcademicoFIAP\Repository\TurmaRepository;
 
 class ValidatorService
 {
@@ -123,6 +124,61 @@ class ValidatorService
          if ($senha !== $dados['senha_confirma']) {
             $erros[] = "As novas senhas não conferem.";
          }
+      }
+
+      return $erros;
+   }
+
+   /**
+    * Valida os dados de cadastro de uma nova turma.
+    * Retorna um array de erros.
+    */
+   public static function validarNovaTurma(array $dados): array
+   {
+      $erros = [];
+      $repo = new TurmaRepository();
+
+      // RN03: Validar campos obrigatórios
+      if (empty(trim($dados['nome']))) {
+         $erros[] = "O campo 'nome' é obrigatório.";
+      }
+
+      // RN02: Validar tamanho do nome [cite: 25]
+      if (mb_strlen(trim($dados['nome'])) < 3) {
+         $erros[] = "O nome da turma deve ter no mínimo 3 caracteres.";
+      }
+
+      // Validação de unicidade (Boa prática, similar à RN05)
+      if ($repo->findByNome(trim($dados['nome']))) {
+         $erros[] = "Já existe uma turma cadastrada com este nome.";
+      }
+
+      return $erros;
+   }
+
+   /**
+    * Valida os dados de ATUALIZAÇÃO de uma turma.
+    * Retorna um array de erros.
+    */
+   public static function validarUpdateTurma(array $dados): array
+   {
+      $erros = [];
+      $repo = new TurmaRepository();
+
+      // RN03: Validar campos obrigatórios
+      if (empty(trim($dados['id'])) || empty(trim($dados['nome']))) {
+         $erros[] = "O campo 'nome' é obrigatório.";
+      }
+
+      // RN02: Validar tamanho do nome [cite: 25]
+      if (mb_strlen(trim($dados['nome'])) < 3) {
+         $erros[] = "O nome da turma deve ter no mínimo 3 caracteres.";
+      }
+
+      // Validação de unicidade (ignorando o ID da própria turma)
+      $turmaComNome = $repo->findByNome(trim($dados['nome']));
+      if ($turmaComNome && $turmaComNome->id != $dados['id']) {
+         $erros[] = "Já existe outra turma cadastrada com este nome.";
       }
 
       return $erros;
