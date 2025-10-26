@@ -6,7 +6,7 @@ use PortalAcademicoFIAP\Service\Auth;
         <?php require __DIR__ . '/toggle-menu.php'; // Botão Hamburger ?>
         <div class="logo">
             <a href="<?= route('dashboard') ?>">
-                <img src="<?= APP_URL ?>/assets/img/Artboard-1.webp" alt="logo FIAP">
+                <img src="<?= APP_URL ?>/assets/img/fiap_logo.webp" alt="logo FIAP">
             </a>
         </div>
     </div>

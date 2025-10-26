@@ -5,7 +5,7 @@ use PortalAcademicoFIAP\Service\Auth;
     <div class="side-inner">
         <div class="profile">
             <a href="<?= route('dashboard') ?>">
-                <img src="<?= APP_URL ?>/assets/img/Artboard-1.webp" alt="Logo FIAP" class="img-fluid">
+                <img src="<?= APP_URL ?>/assets/img/fiap_logo.webp" alt="Logo FIAP" class="img-fluid">
             </a>
         </div>
 
