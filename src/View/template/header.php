@@ -44,7 +44,7 @@
       }
 
       main.container {
-         padding-top: 55px;
+         padding-top: 100px;
          padding-bottom: 2rem;
          transition: margin-left 1s cubic-bezier(0.23, 1, 0.32, 1);
          min-width: 95%;
@@ -397,11 +397,11 @@
 
 <body class="d-flex flex-column h-100">
 
-   <?php require __DIR__ . '/navbar.php';?>
+   <?php require __DIR__ . '/navbar.php'; ?>
 
    <?php // SÓ CARREGA O SIDEMENU SE ESTIVER LOGADO ===
    if (Auth::check()): ?>
-      <?php require __DIR__ . '/sidemenu.php';?>
+      <?php require __DIR__ . '/sidemenu.php'; ?>
    <?php endif; ?>
 
    <main class="container">
