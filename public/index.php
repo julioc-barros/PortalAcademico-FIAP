@@ -29,21 +29,25 @@ $config = require_once __DIR__ . '/../config/config.php';
  * ---------------------------------------------------------------
  */
 
-$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
-$host = $_SERVER['HTTP_HOST'];
+// 1. Detecta o protocolo (HTTPS via proxy OU conexão direta)
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+   || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+   ? "https" : "http";
 
-// $_SERVER['SCRIPT_NAME'] será /public/index.php
-// dirname(dirname()) nos dará a raiz real (/)
+// 2. Define o host (pode usar X_FORWARDED_HOST se Nginx estiver configurado)
+$host = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST'] ?? 'localhost';
+
+// 3. Define o caminho base (para raiz do servidor)
 $basePath = dirname(dirname($_SERVER['SCRIPT_NAME']));
-
-// Normaliza barras
 $basePath = str_replace('\\', '/', $basePath);
+// Remove a barra final se não for a raiz absoluta
+$baseUrlPath = ($basePath === '/' || $basePath === '') ? '' : rtrim($basePath, '/');
 
-// Se $basePath for '/', rtrim o remove, ficando só o host
-$baseUrl = rtrim("$protocol://$host" . $basePath, '/');
+// 4. Monta a URL Base completa
+$baseUrl = "$protocol://$host" . $baseUrlPath;
 
 // Define a constante global
-define('APP_URL', $baseUrl); // Resultado: http://localhost
+define('APP_URL', $baseUrl); // Resultado: https://portalfiap.juliocbarros.tech
 
 /**
  * ---------------------------------------------------------------
