@@ -36,5 +36,10 @@ return [
     'turmas.show' => '/turmas/visualizar',
 
     // Rota para o novo menu de admin
-    'admin.users' => '/admin/usuarios',
+    'admin.users.index' => '/admin/usuarios',
+    'admin.users.create' => '/admin/usuarios/novo',
+    'admin.users.store' => '/admin/usuarios/salvar',
+    'admin.users.edit' => '/admin/usuarios/editar',
+    'admin.users.update' => '/admin/usuarios/atualizar',
+    'admin.users.delete' => '/admin/usuarios/excluir',
 ];

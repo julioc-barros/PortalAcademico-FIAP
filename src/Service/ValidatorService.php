@@ -1,6 +1,7 @@
 <?php
 namespace PortalAcademicoFIAP\Service;
 
+use PortalAcademicoFIAP\Repository\AdminRepository;
 use PortalAcademicoFIAP\Repository\AlunoRepository;
 use PortalAcademicoFIAP\Repository\TurmaRepository;
 
@@ -179,6 +180,96 @@ class ValidatorService
       $turmaComNome = $repo->findByNome(trim($dados['nome']));
       if ($turmaComNome && $turmaComNome->id != $dados['id']) {
          $erros[] = "Já existe outra turma cadastrada com este nome.";
+      }
+
+      return $erros;
+   }
+
+   /**
+    * Valida os dados de cadastro de um novo administrador.
+    */
+   public static function validarNovoAdmin(array $dados): array
+   {
+      $erros = [];
+      $repo = new AdminRepository();
+
+      $camposObrigatorios = ['nome', 'email', 'senha', 'senha_confirma'];
+      foreach ($camposObrigatorios as $campo) {
+         if (empty(trim($dados[$campo]))) {
+            $erros[] = "O campo '{$campo}' é obrigatório.";
+         }
+      }
+      if (!empty($erros))
+         return $erros;
+
+      if (mb_strlen(trim($dados['nome'])) < 3) {
+         $erros[] = "O nome deve ter no mínimo 3 caracteres.";
+      }
+      if (!filter_var($dados['email'], FILTER_VALIDATE_EMAIL)) {
+         $erros[] = "O e-mail informado não é válido.";
+      }
+      if ($repo->findByEmail(trim($dados['email']))) {
+         $erros[] = "Este e-mail já está cadastrado.";
+      }
+
+      $senha = $dados['senha'];
+      if (strlen($senha) < 8 || !preg_match('/[A-Z]/', $senha) || !preg_match('/[a-z]/', $senha) || !preg_match('/[0-9]/', $senha) || !preg_match('/[\W_]/', $senha)) {
+         $erros[] = "A senha não atende aos requisitos: mínimo 8 caracteres, com maiúsculas, minúsculas, números e símbolos.";
+      }
+      if ($senha !== $dados['senha_confirma']) {
+         $erros[] = "As senhas não conferem.";
+      }
+
+      // Valida o campo is_super_admin (deve ser 0 ou 1)
+      if (!isset($dados['is_super_admin']) || !in_array($dados['is_super_admin'], ['0', '1'])) {
+         $erros[] = "O tipo de permissão (Super Admin) é inválido.";
+      }
+
+      return $erros;
+   }
+
+   /**
+    * Valida os dados de atualização de um administrador.
+    */
+   public static function validarUpdateAdmin(array $dados): array
+   {
+      $erros = [];
+      $repo = new AdminRepository();
+
+      $camposObrigatorios = ['id', 'nome', 'email'];
+      foreach ($camposObrigatorios as $campo) {
+         if (empty(trim($dados[$campo]))) {
+            $erros[] = "O campo '{$campo}' é obrigatório.";
+         }
+      }
+      if (!empty($erros))
+         return $erros;
+
+      if (mb_strlen(trim($dados['nome'])) < 3) {
+         $erros[] = "O nome deve ter no mínimo 3 caracteres.";
+      }
+      if (!filter_var($dados['email'], FILTER_VALIDATE_EMAIL)) {
+         $erros[] = "O e-mail informado não é válido.";
+      }
+
+      $adminComEmail = $repo->findByEmail(trim($dados['email']));
+      if ($adminComEmail && $adminComEmail->id != $dados['id']) {
+         $erros[] = "Este e-mail já está cadastrado por outro administrador.";
+      }
+
+      // Valida senha apenas se digitada
+      if (!empty($dados['senha'])) {
+         $senha = $dados['senha'];
+         if (strlen($senha) < 8 || !preg_match('/[A-Z]/', $senha) || !preg_match('/[a-z]/', $senha) || !preg_match('/[0-9]/', $senha) || !preg_match('/[\W_]/', $senha)) {
+            $erros[] = "A nova senha não atende aos requisitos.";
+         }
+         if ($senha !== $dados['senha_confirma']) {
+            $erros[] = "As novas senhas não conferem.";
+         }
+      }
+
+      if (!isset($dados['is_super_admin']) || !in_array($dados['is_super_admin'], ['0', '1'])) {
+         $erros[] = "O tipo de permissão (Super Admin) é inválido.";
       }
 
       return $erros;

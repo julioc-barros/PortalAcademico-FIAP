@@ -66,7 +66,6 @@ $routes = [
       'POST' => [AlunoController::class, 'desmatriculaAluno'] // Processar desmatrícula
    ],
 
-
    // CRUD Turmas
    '/turmas' => [
       'GET' => [TurmaController::class, 'index'] // Listagem
@@ -90,9 +89,24 @@ $routes = [
       'GET' => [TurmaController::class, 'show'] // Ver alunos da turma 
    ],
 
-   // Rota para o novo menu de admin
+   // CRUD Usuarios (Apenas para SUPER ADMIN)
    '/admin/usuarios' => [
-      'GET' => [AdminController::class, 'indexUsers'] // Exemplo
+      'GET' => [AdminController::class, 'indexUsers'] // Listagem
+   ],
+   '/admin/usuarios/novo' => [
+      'GET' => [AdminController::class, 'createUser'] // Formulário de cadastro
+   ],
+   '/admin/usuarios/salvar' => [
+      'POST' => [AdminController::class, 'storeUser'] // Salvar novo
+   ],
+   '/admin/usuarios/editar' => [
+      'GET' => [AdminController::class, 'editUser'] // Formulário de edição
+   ],
+   '/admin/usuarios/atualizar' => [
+      'POST' => [AdminController::class, 'updateUser'] // Atualizar existente
+   ],
+   '/admin/usuarios/excluir' => [
+      'POST' => [AdminController::class, 'deleteUser'] // Excluir (Soft-delete)
    ],
 
 ];
