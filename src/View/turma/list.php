@@ -1,6 +1,6 @@
-<?php require __DIR__ . '/../template/header.php'; // Inclui o topo 
+<?php require __DIR__ . '/../template/header.php';
 
-use PortalAcademicoFIAP\Service\Auth;?>
+use PortalAcademicoFIAP\Service\Auth; ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
    <h1 class="h2">Gerenciamento de Turmas</h1>
@@ -17,7 +17,7 @@ use PortalAcademicoFIAP\Service\Auth;?>
          <tr>
             <th scope="col">Nome da Turma</th>
             <th scope="col">Descrição</th>
-            <th scope="col">Nº de Alunos (RN06)</th>
+            <th scope="col">Nº de Alunos</th>
             <th scope="col">Ações</th>
          </tr>
       </thead>
@@ -48,4 +48,4 @@ use PortalAcademicoFIAP\Service\Auth;?>
    </table>
 </div>
 
-<?php require __DIR__ . '/../template/footer.php'; // Inclui o rodapé ?>
+<?php require __DIR__ . '/../template/footer.php'; ?>

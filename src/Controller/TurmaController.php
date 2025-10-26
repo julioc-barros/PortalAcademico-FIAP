@@ -59,7 +59,7 @@ class TurmaController
    }
 
    /**
-    * Formulário de Edição (GET /turmas/editar)
+    * Formulário de Edição
     */
    public function edit()
    {
@@ -81,7 +81,7 @@ class TurmaController
    }
 
    /**
-    * Atualizar Turma (POST /turmas/atualizar)
+    * Atualizar Turma
     */
    public function update()
    {
@@ -103,7 +103,7 @@ class TurmaController
    }
 
    /**
-    * Excluir Turma (POST /turmas/excluir)
+    * Excluir Turma
     */
    public function delete()
    {
@@ -124,8 +124,7 @@ class TurmaController
    }
 
    /**
-    * Visualizar Alunos da Turma (GET /turmas/visualizar)
-    * Atende RN15 [cite: 15]
+    * Visualizar Alunos da Turma
     */
    public function show()
    {

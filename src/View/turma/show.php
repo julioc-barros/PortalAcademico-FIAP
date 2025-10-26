@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/../template/header.php'; // Inclui o topo 
+<?php require __DIR__ . '/../template/header.php';
 
 use PortalAcademicoFIAP\Service\Auth;?>
 
@@ -49,4 +49,4 @@ use PortalAcademicoFIAP\Service\Auth;?>
    </div>
 <?php endif; ?>
 
-<?php require __DIR__ . '/../template/footer.php'; // Inclui o rodapé ?>
+<?php require __DIR__ . '/../template/footer.php'; ?>
