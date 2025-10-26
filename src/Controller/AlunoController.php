@@ -6,6 +6,7 @@ use PortalAcademicoFIAP\Repository\MatriculaRepository;
 use PortalAcademicoFIAP\Repository\TurmaRepository;
 use PortalAcademicoFIAP\Service\AuditLogger;
 use PortalAcademicoFIAP\Service\Auth;
+use PortalAcademicoFIAP\Service\FlashMessageService;
 use PortalAcademicoFIAP\Service\ValidatorService;
 
 class AlunoController
@@ -30,7 +31,16 @@ class AlunoController
    public function create()
    {
       $csrfToken = Auth::generateCsrfToken();
-      view('aluno.form', ['csrfToken' => $csrfToken]);
+
+      // Pega erros e dados antigos da sessão
+      $errors = FlashMessageService::get('errors');
+      $oldInput = FlashMessageService::get('old_input') ?? []; // Pega ou define array vazio
+
+      view('aluno.form', [
+         'csrfToken' => $csrfToken,
+         'errors' => $errors, // Passa para a view
+         'oldInput' => $oldInput // Passa para a view
+      ]);
    }
 
    /**
@@ -47,8 +57,9 @@ class AlunoController
       $erros = ValidatorService::validarNovoAluno($dados);
 
       if (!empty($erros)) {
-         echo "Erros: " . implode(', ', $erros);
-         exit;
+         FlashMessageService::set('errors', $erros);
+         FlashMessageService::set('old_input', $dados);
+         redirect(route('alunos.create'));
       }
 
       // Salvar no Repositório
@@ -82,9 +93,15 @@ class AlunoController
       }
 
       $csrfToken = Auth::generateCsrfToken();
+      // Pega erros e dados antigos da sessão
+      $errors = FlashMessageService::get('errors');
+      $oldInput = FlashMessageService::get('old_input') ?? [];
+
       view('aluno.form', [
          'aluno' => $aluno,
-         'csrfToken' => $csrfToken
+         'csrfToken' => $csrfToken,
+         'errors' => $errors, // Passa para a view
+         'oldInput' => $oldInput // Passa para a view
       ]);
    }
 
@@ -102,8 +119,9 @@ class AlunoController
       $erros = ValidatorService::validarUpdateAluno($dados);
 
       if (!empty($erros)) {
-         echo "Erros: " . implode(', ', $erros);
-         exit;
+         FlashMessageService::set('errors', $erros);
+         FlashMessageService::set('old_input', $dados);
+         redirect(route('alunos.edit', ['id' => $dados['id']]));
       }
 
       if ($this->repository->atualizar($dados)) {

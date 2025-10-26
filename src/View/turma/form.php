@@ -2,14 +2,17 @@
 // Inclui o topo
 require __DIR__ . '/../template/header.php';
 
-// Lógica da View: Verifica se está editando ou criando
 $isEdit = isset($turma);
 
-$nome_turma = $turma->nome ?? '';
-$descricao_turma = $turma->descricao ?? '';
+// Usa oldInput se existir
+$nome_turma = $oldInput['nome'] ?? ($turma->nome ?? '');
+$descricao_turma = $oldInput['descricao'] ?? ($turma->descricao ?? '');
 
 $tituloPagina = $isEdit ? "Editar Turma: " . htmlspecialchars($nome_turma) : "Nova Turma";
-$formAction = $isEdit ? APP_URL . '/turmas/atualizar' : APP_URL . '/turmas/salvar';
+$formAction = $isEdit ? route('turmas.update') : route('turmas.store');
+
+// Verifica se há erros
+$hasErrors = isset($errors) && !empty($errors);
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -18,8 +21,6 @@ $formAction = $isEdit ? APP_URL . '/turmas/atualizar' : APP_URL . '/turmas/salva
       Voltar para Listagem
    </a>
 </div>
-
-<?php?>
 
 <form action="<?= $formAction; ?>" method="POST">
 
@@ -49,3 +50,24 @@ $formAction = $isEdit ? APP_URL . '/turmas/atualizar' : APP_URL . '/turmas/salva
 </form>
 
 <?php require __DIR__ . '/../template/footer.php'; ?>
+
+<?php if ($hasErrors): ?>
+   <script>
+      $(document).ready(function () {
+         let errorHtml = '<ul style="text-align: left; list-style-position: inside;">';
+         <?php foreach ($errors as $error): ?>
+            errorHtml += '<li><?= htmlspecialchars(addslashes($error)); ?></li>';
+         <?php endforeach; ?>
+         errorHtml += '</ul>';
+
+         Swal.fire({
+            title: 'Erro de Validação!',
+            html: errorHtml,
+            icon: 'error',
+            confirmButtonColor: 'var(--dark-danger)',
+            background: 'var(--dark-bg-secondary)',
+            color: 'var(--dark-text-primary)'
+         });
+      });
+   </script>
+<?php endif; ?>

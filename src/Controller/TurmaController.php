@@ -5,6 +5,7 @@ use PortalAcademicoFIAP\Repository\AlunoRepository;
 use PortalAcademicoFIAP\Repository\TurmaRepository;
 use PortalAcademicoFIAP\Service\AuditLogger;
 use PortalAcademicoFIAP\Service\Auth;
+use PortalAcademicoFIAP\Service\FlashMessageService;
 use PortalAcademicoFIAP\Service\ValidatorService;
 
 class TurmaController
@@ -33,7 +34,16 @@ class TurmaController
    public function create()
    {
       $csrfToken = Auth::generateCsrfToken();
-      view('turma.form', ['csrfToken' => $csrfToken]);
+
+      // Pega erros e dados antigos da sessão
+      $errors = FlashMessageService::get('errors');
+      $oldInput = FlashMessageService::get('old_input') ?? [];
+
+      view('turma.form', [
+         'csrfToken' => $csrfToken,
+         'errors' => $errors,
+         'oldInput' => $oldInput
+      ]);
    }
 
    /**
@@ -46,8 +56,9 @@ class TurmaController
 
       $erros = ValidatorService::validarNovaTurma($dados);
       if (!empty($erros)) {
-         echo "Erros: " . implode(', ', $erros);
-         exit;
+         FlashMessageService::set('errors', $erros);
+         FlashMessageService::set('old_input', $dados);
+         redirect(route('turmas.create'));
       }
 
       if ($this->repository->salvar($dados)) {
@@ -74,9 +85,15 @@ class TurmaController
       }
 
       $csrfToken = Auth::generateCsrfToken();
+      // Pega erros e dados antigos da sessão
+      $errors = FlashMessageService::get('errors');
+      $oldInput = FlashMessageService::get('old_input') ?? [];
+
       view('turma.form', [
          'turma' => $turma,
-         'csrfToken' => $csrfToken
+         'csrfToken' => $csrfToken,
+         'errors' => $errors,
+         'oldInput' => $oldInput
       ]);
    }
 
@@ -90,8 +107,9 @@ class TurmaController
 
       $erros = ValidatorService::validarUpdateTurma($dados);
       if (!empty($erros)) {
-         echo "Erros: " . implode(', ', $erros);
-         exit;
+         FlashMessageService::set('errors', $erros);
+         FlashMessageService::set('old_input', $dados);
+         redirect(route('turmas.edit', ['id' => $dados['id']]));
       }
 
       if ($this->repository->atualizar($dados)) {
