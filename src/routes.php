@@ -3,6 +3,7 @@
 use PortalAcademicoFIAP\Controller\AdminController;
 use PortalAcademicoFIAP\Controller\AuthController;
 use PortalAcademicoFIAP\Controller\AlunoController;
+use PortalAcademicoFIAP\Controller\MatriculaController;
 use PortalAcademicoFIAP\Controller\TurmaController;
 use PortalAcademicoFIAP\Service\Auth;
 
@@ -78,6 +79,14 @@ $routes = [
    '/turmas/visualizar' => [
       'GET' => [TurmaController::class, 'show'] // Ver alunos da turma 
    ],
+
+   // CRUD Matriculas
+   '/matriculas' => [
+      'GET' => [MatriculaController::class, 'index'] // Formulário de matrícula 
+   ],
+   '/matriculas/salvar' => [
+      'POST' => [MatriculaController::class, 'store'] // Matricular aluno 
+   ]
 
 ];
 
