@@ -118,6 +118,26 @@ class TurmaRepository
    }
 
    /**
+    * Busca as turmas em que um aluno específico está matriculado.
+    */
+   public function findTurmasByAlunoId(int $aluno_id): array
+   {
+      $sql = "SELECT t.* FROM turmas t
+                JOIN matriculas m ON t.id = m.turma_id
+                WHERE m.aluno_id = ? AND t.d_e_l_e_t_ = false
+                ORDER BY t.nome ASC";
+
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute([$aluno_id]);
+
+      $turmas = [];
+      while ($dados = $stmt->fetch(PDO::FETCH_ASSOC)) {
+         $turmas[] = new Turma($dados['id'], $dados['nome'], $dados['descricao']);
+      }
+      return $turmas;
+   }
+
+   /**
     * Salva uma nova turma no banco de dados.
     */
    public function salvar(array $dados): bool

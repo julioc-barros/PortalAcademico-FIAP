@@ -32,11 +32,6 @@ use PortalAcademicoFIAP\Service\Auth;
                                     <i class="bi bi-collection me-2"></i> Turmas
                                 </a>
                             </li>
-                            <li>
-                                <a href="<?= route('matriculas.index') ?>">
-                                    <i class="bi bi-person-plus me-2"></i> Matrículas
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </li>

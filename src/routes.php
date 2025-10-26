@@ -56,6 +56,16 @@ $routes = [
    '/alunos/excluir' => [
       'POST' => [AlunoController::class, 'delete'] // Excluir (Soft-delete) 
    ],
+   '/alunos/matriculas' => [
+      'GET' => [AlunoController::class, 'manipularMatriculas'] // Exibir tela
+   ],
+   '/alunos/matricular' => [
+      'POST' => [AlunoController::class, 'matriculaAluno'] // Processar matrícula
+   ],
+   '/alunos/desmatricular' => [
+      'POST' => [AlunoController::class, 'desmatriculaAluno'] // Processar desmatrícula
+   ],
+
 
    // CRUD Turmas
    '/turmas' => [
@@ -80,13 +90,10 @@ $routes = [
       'GET' => [TurmaController::class, 'show'] // Ver alunos da turma 
    ],
 
-   // CRUD Matriculas
-   '/matriculas' => [
-      'GET' => [MatriculaController::class, 'index'] // Formulário de matrícula 
+   // Rota para o novo menu de admin
+   '/admin/usuarios' => [
+      'GET' => [AdminController::class, 'indexUsers'] // Exemplo
    ],
-   '/matriculas/salvar' => [
-      'POST' => [MatriculaController::class, 'store'] // Matricular aluno 
-   ]
 
 ];
 

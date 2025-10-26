@@ -90,8 +90,8 @@
          border-top: 1px solid var(--dark-border);
       }
 
-      .footer .text-muted {
-         color: var(--dark-text-muted) !important;
+      .text-muted {
+         color: var(--dark-text-secondary) !important;
       }
 
       .navbar {
@@ -370,6 +370,10 @@
       table.dataTable thead .sorting_asc,
       table.dataTable thead .sorting_desc {
          background-image: none !important;
+      }
+
+      div.dt-container div.dt-search input::placeholder {
+         color: var(--dark-text-secondary);
       }
 
       .action-buttons {

@@ -1,4 +1,6 @@
-<?php require __DIR__ . '/../template/header.php'; // Inclui o topo ?>
+<?php require __DIR__ . '/../template/header.php'; // Inclui o topo 
+
+use PortalAcademicoFIAP\Service\Auth;?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
    <h1 class="h2">Alunos da Turma: <?= htmlspecialchars($turma->nome); ?></h1>
@@ -17,6 +19,8 @@
                <th scope="col">Nome</th>
                <th scope="col">E-mail</th>
                <th scope="col">CPF</th>
+               <th scope="col">Ações</th>
+            </tr>
             </tr>
          </thead>
          <tbody>
@@ -25,6 +29,19 @@
                   <td><?= htmlspecialchars($aluno->nome); ?></td>
                   <td><?= htmlspecialchars($aluno->email); ?></td>
                   <td><?= htmlspecialchars($aluno->cpf); ?></td>
+                  <td>
+                     <form action="<?= route('alunos.desmatricular') ?>" method="POST" class="d-inline"
+                        onsubmit="return confirm('Tem certeza que deseja desmatricular <?= htmlspecialchars(addslashes($aluno->nome)); ?> desta turma?');">
+                        <input type="hidden" name="csrf_token" value="<?= Auth::generateCsrfToken(); ?>">
+                        <input type="hidden" name="aluno_id" value="<?= htmlspecialchars($aluno->id); ?>">
+                        <input type="hidden" name="turma_id" value="<?= htmlspecialchars($turma->id); ?>">
+                        <input type="hidden" name="redirect_url" value="<?= route('turmas.show', ['id' => $turma->id]) ?>">
+
+                        <button type="submit" class="btn btn-sm btn-outline-warning" title="Desmatricular Aluno da Turma">
+                           <i class="bi bi-person-dash"></i>
+                        </button>
+                     </form>
+                  </td>
                </tr>
             <?php endforeach; ?>
          </tbody>

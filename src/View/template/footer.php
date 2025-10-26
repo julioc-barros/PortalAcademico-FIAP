@@ -1,7 +1,7 @@
 <!-- footer.php -->
 
 </main>
-<footer class="footer mt-auto py-3 bg-light">
+<footer class="footer mt-auto py-3 bg-light" style="text-align: center;">
    <div class="container">
       <span class="text-muted">Portal Acadêmico FIAP &copy; <?= date(format: 'Y'); ?></span>
    </div>

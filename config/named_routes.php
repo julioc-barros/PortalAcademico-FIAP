@@ -6,31 +6,35 @@
  * Utilizado para evitar alterar rota em todos os lugares
  */
 return [
-   // Auth & Dashboard
-   'dashboard' => '/',
-   
-   'login' => '/login',
-   'login.auth' => '/login/auth',
-   'logout' => '/logout',
+    // Auth & Dashboard
+    'dashboard' => '/',
 
-   // Alunos
-   'alunos.index' => '/alunos',
-   'alunos.create' => '/alunos/novo',
-   'alunos.store' => '/alunos/salvar',
-   'alunos.edit' => '/alunos/editar',
-   'alunos.update' => '/alunos/atualizar',
-   'alunos.delete' => '/alunos/excluir',
+    'login' => '/login',
+    'login.auth' => '/login/auth',
+    'logout' => '/logout',
 
-   // Turmas
-   'turmas.index' => '/turmas',
-   'turmas.create' => '/turmas/novo',
-   'turmas.store' => '/turmas/salvar',
-   'turmas.edit' => '/turmas/editar',
-   'turmas.update' => '/turmas/atualizar',
-   'turmas.delete' => '/turmas/excluir',
-   'turmas.show' => '/turmas/visualizar',
+    // Alunos
+    'alunos.index' => '/alunos',
+    'alunos.create' => '/alunos/novo',
+    'alunos.store' => '/alunos/salvar',
+    'alunos.edit' => '/alunos/editar',
+    'alunos.update' => '/alunos/atualizar',
+    'alunos.delete' => '/alunos/excluir',
 
-   // Matrículas
-   'matriculas.index' => '/matriculas',
-   'matriculas.store' => '/matriculas/salvar',
+    // Alunos x Matriculas 
+    'alunos.matriculas' => '/alunos/matriculas',
+    'alunos.matricular' => '/alunos/matricular',
+    'alunos.desmatricular' => '/alunos/desmatricular',
+
+    // Turmas
+    'turmas.index' => '/turmas',
+    'turmas.create' => '/turmas/novo',
+    'turmas.store' => '/turmas/salvar',
+    'turmas.edit' => '/turmas/editar',
+    'turmas.update' => '/turmas/atualizar',
+    'turmas.delete' => '/turmas/excluir',
+    'turmas.show' => '/turmas/visualizar',
+
+    // Rota para o novo menu de admin
+    'admin.users' => '/admin/usuarios',
 ];

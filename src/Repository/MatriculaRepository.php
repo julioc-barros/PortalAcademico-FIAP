@@ -37,4 +37,22 @@ class MatriculaRepository
       }
    }
 
+   /**
+    * Remove a matrícula de um aluno em uma turma específica.
+    */
+   public function desmatricular(int $aluno_id, int $turma_id): bool
+   {
+      $sql = "DELETE FROM matriculas WHERE aluno_id = ? AND turma_id = ?";
+
+      try {
+         $stmt = $this->pdo->prepare($sql);
+         // execute() retorna true/false, mas rowCount() confirma se algo foi apagado
+         $stmt->execute([$aluno_id, $turma_id]);
+         return $stmt->rowCount() > 0; // Retorna true se 1 linha foi afetada
+
+      } catch (PDOException $e) {
+         return false;
+      }
+   }
+
 }

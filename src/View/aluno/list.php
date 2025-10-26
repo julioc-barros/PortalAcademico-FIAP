@@ -30,6 +30,11 @@ use PortalAcademicoFIAP\Service\Auth; ?>
                <td><?= htmlspecialchars($aluno->email); ?></td>
                <td><?= htmlspecialchars($aluno->cpf); ?></td>
                <td class="action-buttons">
+                  <a href="<?= route('alunos.matriculas', ['aluno_id' => $aluno->id]) ?>"
+                     class="btn btn-sm btn-outline-info" title="Gerenciar Matrículas">
+                     <i class="bi bi-person-lines-fill"></i>
+                  </a>
+
                   <a href="<?= route('alunos.edit', ['id' => $aluno->id]) ?>" class="btn btn-sm btn-outline-primary"
                      title="Editar Aluno">
                      <i class="bi bi-pencil-square"></i>
@@ -39,6 +44,8 @@ use PortalAcademicoFIAP\Service\Auth; ?>
                      onsubmit="return confirm('Tem certeza que deseja excluir este aluno?');">
                      <input type="hidden" name="csrf_token" value="<?= Auth::generateCsrfToken(); ?>">
                      <input type="hidden" name="id" value="<?= $aluno->id; ?>">
+                     <input type="hidden" name="redirect_url"
+                        value="<?= route('alunos.matriculas', ['aluno_id' => $aluno->id]) ?>">
                      <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir Aluno">
                         <i class="bi bi-trash3"></i>
                      </button>
