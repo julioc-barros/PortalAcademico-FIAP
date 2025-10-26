@@ -25,6 +25,53 @@
    });
 </script>
 
+<script>
+   $(function () {
+      'use strict';
+
+      // Seleciona TODOS os botões de toggle (o burger E o "Fechar Menu")
+      var $menuToggles = $('.js-menu-toggle');
+
+      // Adiciona o clique a TODOS eles
+      $menuToggles.click(function (e) {
+         e.preventDefault();
+
+         if ($('body').hasClass('show-sidebar')) {
+            // Se está aberto, FECHA
+            $('body').removeClass('show-sidebar');
+            $menuToggles.removeClass('active'); // Remove 'active' de TODOS os botões
+         } else {
+            // Se está fechado, ABRE
+            $('body').addClass('show-sidebar');
+            // Adiciona 'active' APENAS ao ícone burger (o 'X')
+            $('.burger.js-menu-toggle').addClass('active');
+         }
+      });
+
+      // Clique fora do menu (fecha o menu)
+      $(document).mouseup(function (e) {
+         var container = $(".sidebar");
+         if (!container.is(e.target) && container.has(e.target).length === 0) {
+            if ($('body').hasClass('show-sidebar')) {
+               $('body').removeClass('show-sidebar');
+               $menuToggles.removeClass('active');
+            }
+         }
+      });
+
+      // Lógica do Accordion (Bootstrap 5)
+      $('.collapsible').on('click', function (e) {
+         e.preventDefault();
+         var targetId = $(this).attr('data-bs-target');
+         var $collapseTarget = $(targetId);
+         var collapseInstance = bootstrap.Collapse.getOrCreateInstance($collapseTarget[0]);
+         collapseInstance.toggle();
+         var isExpanded = $(this).attr('aria-expanded') === 'true';
+         $(this).attr('aria-expanded', !isExpanded);
+      });
+   });
+</script>
+
 </body>
 
 </html>

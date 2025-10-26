@@ -186,19 +186,28 @@
 
       aside .side-inner {
          height: 100vh;
-         overflow: auto;
-         padding: 20px 0;
+         display: flex;
+         flex-direction: column;
+         padding: 0;
+         overflow: hidden;
       }
 
       aside .side-inner .profile {
          text-align: center;
          margin-bottom: 20px;
-         padding-bottom: 20px;
+         padding: 20px 0;
          border-bottom: 1px solid var(--dark-border);
+         flex-shrink: 0;
       }
 
       aside .side-inner .profile img {
          width: 120px;
+      }
+
+      aside .side-inner .nav-menu {
+         flex-grow: 1;
+         overflow-y: auto;
+         padding-bottom: 20px;
       }
 
       aside .side-inner .nav-menu ul,
@@ -281,6 +290,13 @@
 
       .nav-menu .accordion .collapse.show {
          display: block;
+      }
+
+      .sidebar-footer {
+         padding: 20px;
+         border-top: 1px solid var(--dark-border);
+         flex-shrink: 0;
+         margin-top: 0;
       }
    </style>
 </head>

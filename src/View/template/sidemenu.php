@@ -61,5 +61,12 @@ use PortalAcademicoFIAP\Service\Auth;
 
             </ul>
         </div>
+
+        <div class="sidebar-footer">
+            <a href="#" class="btn btn-outline-danger w-100 js-menu-toggle">
+                <i class="bi bi-x-circle me-2"></i> Fechar Menu
+            </a>
+        </div>
     </div>
+
 </aside>
