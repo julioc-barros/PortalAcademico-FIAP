@@ -18,6 +18,10 @@
    $(document).ready(function () {
       // Aplica o DataTables em qualquer tabela com o ID 'tabela-dados'
       $('#tabela-dados').DataTable({
+         "columnDefs": [{
+            "targets": 3,
+            "orderable": false
+         }],
          "language": {
             "url": "https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json"
          }
