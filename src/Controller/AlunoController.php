@@ -65,8 +65,11 @@ class AlunoController
       // Salvar no Repositório
       if ($this->repository->salvar($dados)) {
          AuditLogger::log(Auth::id(), "Cadastrou o novo aluno: {$dados['nome']}");
+         FlashMessageService::set('success', 'cadastrado');
          redirect('/alunos?sucesso=1');
       } else {
+         FlashMessageService::set('error', 'Erro ao salvar o aluno.'); // Mensagem de erro genérica
+         FlashMessageService::set('old_input', $dados);
          redirect('/alunos/novo?erro=1');
       }
    }
