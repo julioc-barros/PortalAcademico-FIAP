@@ -34,11 +34,14 @@ class AdminController
         $stats = [
             'total_alunos' => $alunoRepo->ContarAtivos(),
             'total_turmas' => $turmaRepo->ContarAtivos(),
-            'total_matriculas' => $matriculaRepo->contarTotal()
+            'total_matriculas' => $matriculaRepo->contarTotal(),
+            'turma_mais_populosa' => $turmaRepo->findTurmasOrderedByStudentCount('DESC', 1)[0] ?? null,
+            'turma_menos_populosa' => $turmaRepo->findTurmasOrderedByStudentCount('ASC', 1, true)[0] ?? null,
+            'alunos_sem_turma' => $alunoRepo->ContarAlunosSemMatriculas()
         ];
 
         view('admin.dashboard', [
-            'stats' => $stats, // Passa os dados reais
+            'stats' => $stats,
             'error' => $error,
             'success' => $success
         ]);

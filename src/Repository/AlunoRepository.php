@@ -42,6 +42,20 @@ class AlunoRepository
    }
 
    /**
+    * Conta o número de alunos ativos que não estão matriculados em nenhuma turma.
+    */
+   public function ContarAlunosSemMatriculas(): int
+   {
+      $sql = "SELECT COUNT(a.id) 
+                FROM alunos a
+                LEFT JOIN matriculas m ON a.id = m.aluno_id
+                WHERE a.d_e_l_e_t_ = false AND m.id IS NULL";
+
+      $stmt = $this->pdo->query($sql);
+      return (int) $stmt->fetchColumn();
+   }
+
+   /**
     * Função helper para converter um array do banco em um objeto Aluno.
     */
    private function hidratarAluno(array $dados): Aluno
@@ -203,7 +217,7 @@ class AlunoRepository
     */
    public function buscarAlunosPorTurmaId(int $turma_id): array
    {
-      $sql =  "SELECT a.* FROM alunos a
+      $sql = "SELECT a.* FROM alunos a
                JOIN matriculas m ON (a.id = m.aluno_id)
                WHERE 1=1
                AND m.turma_id = ? 

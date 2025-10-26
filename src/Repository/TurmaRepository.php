@@ -199,4 +199,42 @@ class TurmaRepository
          return false;
       }
    }
+
+   /**
+    * Busca turmas ativas ordenadas pela contagem de alunos.
+    * Usado para encontrar turmas com mais/menos alunos no dashboard.
+    */
+   public function findTurmasOrderedByStudentCount(string $orderDirection = 'DESC', int $limit = 1, bool $excludeEmpty = false): array
+   {
+      $orderDirection = strtoupper($orderDirection) === 'ASC' ? 'ASC' : 'DESC'; // Garante ASC ou DESC
+      $limit = max(1, $limit); // Garante pelo menos 1
+
+      $sql = "SELECT 
+                    t.id, t.nome, t.descricao, t.d_e_l_e_t_,
+                    COUNT(m.aluno_id) as total_alunos
+                FROM turmas t
+                LEFT JOIN 
+                    matriculas m ON t.id = m.turma_id
+                WHERE 
+                    t.d_e_l_e_t_ = false ";
+
+      // Excluir turmas vazias se solicitado (útil para "menos alunos")
+      if ($excludeEmpty && $orderDirection === 'ASC') {
+         $sql .= " AND m.aluno_id IS NOT NULL "; // Ou HAVING total_alunos > 0
+      }
+
+      $sql .= " GROUP BY 
+                    t.id, t.nome, t.descricao, t.d_e_l_e_t_
+                ORDER BY 
+                    total_alunos {$orderDirection}, t.nome ASC -- Desempata por nome
+                LIMIT {$limit}";
+
+      $stmt = $this->pdo->query($sql);
+
+      $turmas = [];
+      while ($dados = $stmt->fetch(PDO::FETCH_ASSOC)) {
+         $turmas[] = $this->hidratarTurma($dados); // Usa o helper que já criamos
+      }
+      return $turmas;
+   }
 }
