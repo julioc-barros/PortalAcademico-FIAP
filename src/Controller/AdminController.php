@@ -2,6 +2,8 @@
 namespace PortalAcademicoFIAP\Controller;
 
 use PortalAcademicoFIAP\Repository\AdminRepository;
+use PortalAcademicoFIAP\Repository\AlunoRepository;
+use PortalAcademicoFIAP\Repository\TurmaRepository;
 use PortalAcademicoFIAP\Service\Auth;
 use PortalAcademicoFIAP\Service\FlashMessageService;
 use PortalAcademicoFIAP\Service\ValidatorService;
@@ -21,27 +23,31 @@ class AdminController
      */
     public function dashboard()
     {
-        // [AÇÃO] Pega mensagens flash
+        $alunoRepo = new AlunoRepository();
+        $TurmaRepo = new TurmaRepository();
+
         $error = FlashMessageService::get('error');
         $success = FlashMessageService::get('success');
 
-        $stats = [ /* ... */];
+        $stats = [
+            "total_alunos" => $alunoRepo->ContarAtivos(),
+            "total_turmas" => $TurmaRepo->ContarAtivos(),
+            "total_matriculas" => 10,
+        ];
 
         view('admin.dashboard', [
             'stats' => $stats,
-            'error' => $error,    // Passa para view
-            'success' => $success // Passa para view
+            'error' => $error,
+            'success' => $success
         ]);
     }
-
-    // --- CRUD DE ADMINISTRADORES ---
 
     /**
      * Listagem de Admins (GET /admin/usuarios)
      */
     public function indexUsers()
     {
-        // [AÇÃO] Pega mensagens flash
+        // Pega mensagens flash
         $success = FlashMessageService::get('success');
         $error = FlashMessageService::get('error');
 
@@ -49,8 +55,8 @@ class AdminController
 
         view('admin.list_users', [
             'admins' => $admins,
-            'success' => $success, // Passa para view
-            'error' => $error     // Passa para view
+            'success' => $success,
+            'error' => $error
         ]);
     }
 
@@ -60,7 +66,7 @@ class AdminController
     public function createUser()
     {
         $csrfToken = Auth::generateCsrfToken();
-        // [AÇÃO] Pega mensagens flash (incluindo sucesso/erro caso haja redirect de storeUser)
+        // Pega mensagens flash (incluindo sucesso/erro caso haja redirect de storeUser)
         $errors = FlashMessageService::get('errors');
         $oldInput = FlashMessageService::get('old_input') ?? [];
         $success = FlashMessageService::get('success'); // Não esperado aqui, mas seguro incluir
@@ -113,7 +119,7 @@ class AdminController
         }
 
         $csrfToken = Auth::generateCsrfToken();
-        // [AÇÃO] Pega mensagens flash
+        // Pega mensagens flash
         $errors = FlashMessageService::get('errors');
         $oldInput = FlashMessageService::get('old_input') ?? [];
         $success = FlashMessageService::get('success'); // Não esperado aqui, mas seguro incluir
