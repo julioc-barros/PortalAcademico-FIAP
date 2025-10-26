@@ -32,8 +32,8 @@ class Database
    {
       if (self::$instance === null) {
          // Carrega as configurações do banco de dados
-         // __DIR__ . '/../../' volta duas pastas (de /src/Service para a raiz)
          $config = require __DIR__ . '/../../config/config.php';
+
          $dbConfig = $config['database'];
 
          // Monta a DSN (Data Source Name)

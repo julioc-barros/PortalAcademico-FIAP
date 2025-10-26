@@ -6,25 +6,23 @@ use PortalAcademicoFIAP\Service\Auth;
 class AuthController
 {
    /**
-    * Exibe o formulário de login (GET /login)
+    * Exibe o formulário de login
     */
    public function index()
    {
       // Se o usuário já está logado, redireciona para a tela inicial
       if (Auth::check()) {
-         header('Location: /');
+         redirect(route("dashboard", []));
          exit;
       }
 
       // Passa o token CSRF para a view
       $csrfToken = Auth::generateCsrfToken();
-
-      // Carrega a view do formulário de login
-      require __DIR__ . '/../View/auth/login.php';
+      view("auth.login", ["csrfToken" => $csrfToken]);
    }
 
    /**
-    * Processa a tentativa de login (POST /login/auth)
+    * Processa a tentativa de login
     */
    public function auth()
    {
@@ -32,29 +30,26 @@ class AuthController
       $password = $_POST['password'] ?? null;
       $token = $_POST['csrf_token'] ?? null;
 
-      // 1. Valida o Token CSRF
+      // Valida o Token CSRF
       Auth::validateCsrfToken($token);
 
-      // 2. Tenta realizar o login
+      // Tenta realizar o login
       if (Auth::login($email, $password)) {
-         // Sucesso: Redireciona para o Dashboard
-         header('Location: /');
+         redirect(route("dashboard", []));
          exit;
       } else {
-         // Falha: Redireciona de volta para o login com uma msg de erro
-         // (Vamos implementar um sistema de 'flash messages' depois)
-         header('Location: /login?error=1');
+         redirect(route("login", ["error" => 1]));
          exit;
       }
    }
 
    /**
-    * Realiza o logout do usuário (GET /logout)
+    * Realiza o logout do usuário
     */
    public function logout()
    {
       Auth::logout();
-      header('Location: /login');
+      redirect(route("login", []));
       exit;
    }
 }
