@@ -36,8 +36,8 @@ class AlunoRepository
    {
       $sql = "SELECT count(1) FROM alunos WHERE d_e_l_e_t_ = false;";
       $stmt = $this->pdo->query($sql);
-      $contagemAtivos =  $stmt->fetchColumn(); // Função que busca apenas uma coluna
-      
+      $contagemAtivos = $stmt->fetchColumn(); // Função que busca apenas uma coluna
+
       return $contagemAtivos;
    }
 
@@ -195,6 +195,29 @@ class AlunoRepository
       } catch (\PDOException $e) {
          return false;
       }
+   }
+
+   /**
+    * Busca todos os alunos matriculados em uma turma específica.
+    * @return Aluno[]
+    */
+   public function buscarAlunosPorTurmaId(int $turma_id): array
+   {
+      $sql =  "SELECT a.* FROM alunos a
+               JOIN matriculas m ON (a.id = m.aluno_id)
+               WHERE 1=1
+               AND m.turma_id = ? 
+               AND a.d_e_l_e_t_ = false
+               ORDER BY a.nome ASC";
+
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute([$turma_id]);
+
+      $alunos = [];
+      while ($dados = $stmt->fetch(PDO::FETCH_ASSOC)) {
+         $alunos[] = $this->hidratarAluno($dados);
+      }
+      return $alunos;
    }
 
 }
