@@ -1,104 +1,18 @@
-<!-- toggle-menu.php -->
-
-<style>
-    /* Burger */
-    .burger {
-        width: 28px;
-        height: 32px;
-        cursor: pointer;
-        position: relative;
-        z-index: 99;
-        float: right;
-    }
-
-    .burger:before,
-    .burger span,
-    .burger:after {
-        width: 100%;
-        height: 2px;
-        display: block;
-        background: white;
-        border-radius: 2px;
-        position: absolute;
-        opacity: 1;
-    }
-
-    .burger:before,
-    .burger:after {
-        -webkit-transition: top 0.35s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1), background-color 1.15s cubic-bezier(0.86, 0, 0.07, 1), -webkit-transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-        transition: top 0.35s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1), background-color 1.15s cubic-bezier(0.86, 0, 0.07, 1), -webkit-transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-        -o-transition: top 0.35s cubic-bezier(0.23, 1, 0.32, 1), transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1), background-color 1.15s cubic-bezier(0.86, 0, 0.07, 1);
-        transition: top 0.35s cubic-bezier(0.23, 1, 0.32, 1), transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1), background-color 1.15s cubic-bezier(0.86, 0, 0.07, 1);
-        transition: top 0.35s cubic-bezier(0.23, 1, 0.32, 1), transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1), background-color 1.15s cubic-bezier(0.86, 0, 0.07, 1), -webkit-transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-        -webkit-transition: top 0.35s cubic-bezier(0.23, 1, 0.32, 1), -webkit-transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1), background-color 1.15s cubic-bezier(0.86, 0, 0.07, 1);
-        content: "";
-    }
-
-    .burger:before {
-        top: 4px;
-    }
-
-    .burger span {
-        top: 15px;
-    }
-
-    .burger:after {
-        top: 26px;
-    }
-
-    /* Hover */
-    .burger:hover:before {
-        top: 7px;
-    }
-
-    .burger:hover:after {
-        top: 23px;
-    }
-
-    /* Click */
-    .burger.active span {
-        opacity: 0;
-    }
-
-    .burger.active:before,
-    .burger.active:after {
-        top: 40%;
-    }
-
-    .burger.active:before {
-        -webkit-transform: rotate(45deg);
-        -moz-transform: rotate(45deg);
-        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=5);
-        /*for IE*/
-    }
-
-    .burger.active:after {
-        -webkit-transform: rotate(-45deg);
-        -moz-transform: rotate(-45deg);
-        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=-5);
-        /*for IE*/
-    }
-
-    .burger:focus {
-        outline: none;
-    }
-</style>
-
 <div class="toggle">
-    <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
-        <span></span>
+    <a href="#" class="burger js-menu-toggle">
+        <i class="icon-default bi bi-list"></i>
+        <i class="icon-active bi bi-x-lg"></i>
     </a>
 </div>
 
 <script>
     $(function () {
-
         'use strict';
 
+        // Lógica do Toggle (Esta lógica já adiciona a classe '.active' no <a>)
         $('.js-menu-toggle').click(function (e) {
-
+            e.preventDefault();
             var $this = $(this);
-
             if ($('body').hasClass('show-sidebar')) {
                 $('body').removeClass('show-sidebar');
                 $this.removeClass('active');
@@ -106,12 +20,9 @@
                 $('body').addClass('show-sidebar');
                 $this.addClass('active');
             }
-
-            e.preventDefault();
-
         });
 
-        // click outisde offcanvas
+        // Clique fora do menu
         $(document).mouseup(function (e) {
             var container = $(".sidebar");
             if (!container.is(e.target) && container.has(e.target).length === 0) {
@@ -122,5 +33,15 @@
             }
         });
 
+        // Lógica do Accordion (Bootstrap 5)
+        $('.collapsible').on('click', function(e) {
+            e.preventDefault();
+            var targetId = $(this).attr('data-bs-target'); 
+            var $collapseTarget = $(targetId);
+            var collapseInstance = bootstrap.Collapse.getOrCreateInstance($collapseTarget[0]);
+            collapseInstance.toggle();
+            var isExpanded = $(this).attr('aria-expanded') === 'true';
+            $(this).attr('aria-expanded', !isExpanded);
+        });
     });
 </script>
