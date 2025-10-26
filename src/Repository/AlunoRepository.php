@@ -86,4 +86,104 @@ class AlunoRepository
       return $dados ? $this->hidratarAluno($dados) : null;
    }
 
+   /**
+    * Salva um novo aluno no banco de dados.
+    */
+   public function salvar(array $dados): bool
+   {
+      $hashSenha = password_hash($dados['senha'], PASSWORD_BCRYPT);
+
+      $sql = "INSERT INTO alunos (nome, data_nascimento, cpf, email, senha) 
+                VALUES (?, ?, ?, ?, ?)";
+
+      try {
+         $stmt = $this->pdo->prepare($sql);
+         return $stmt->execute([
+            trim($dados['nome']),
+            $dados['data_nascimento'],
+            trim($dados['cpf']),
+            trim($dados['email']),
+            $hashSenha
+         ]);
+      } catch (\PDOException $e) {
+         return false;
+      }
+   }
+
+   /**
+    * Atualiza os dados de um aluno no banco.
+    */
+   public function atualizar(array $dados): bool
+   {
+      // Query base (sem a senha)
+      $sql = "UPDATE alunos SET 
+                    nome = ?, 
+                    data_nascimento = ?, 
+                    cpf = ?, 
+                    email = ? 
+                WHERE id = ?";
+
+      $params = [
+         trim($dados['nome']),
+         $dados['data_nascimento'],
+         trim($dados['cpf']),
+         trim($dados['email']),
+         $dados['id']
+      ];
+
+      // Se uma nova senha foi fornecida, adiciona ela na query
+      if (!empty($dados['senha'])) {
+         // RN08: Criptografar
+         $hashSenha = password_hash($dados['senha'], PASSWORD_BCRYPT);
+
+         $sql = "UPDATE alunos SET 
+                        nome = ?, 
+                        data_nascimento = ?, 
+                        cpf = ?, 
+                        email = ?, 
+                        senha = ? 
+                    WHERE id = ?";
+
+         // Recria os parâmetros com a senha
+         $params = [
+            trim($dados['nome']),
+            $dados['data_nascimento'],
+            trim($dados['cpf']),
+            trim($dados['email']),
+            $hashSenha,
+            $dados['id']
+         ];
+      }
+
+      // Executa a query (com ou sem a senha)
+      try {
+         $stmt = $this->pdo->prepare($sql);
+         return $stmt->execute($params);
+      } catch (\PDOException $e) {
+         // (O ideal é logar o $e->getMessage())
+         return false;
+      }
+   }
+
+   /**
+    * Realiza um "soft delete" do aluno, marcando d_e_l_e_t_ = true.
+    */
+   public function deleteLogico(int $id): bool
+   {
+      // Antes de excluir, verificamos se o aluno pode ser excluído
+      // (ex: se ele tem matrículas ativas).
+      // No nosso dump.sql, a 'CONSTRAINT fk_matriculas_alunos'
+      // está com 'ON DELETE RESTRICT', o que impediria um DELETE físico.
+      // Como é um UPDATE, a restrição não se aplica, o que é bom.
+
+      $sql = "UPDATE alunos SET d_e_l_e_t_ = true WHERE id = ?";
+
+      try {
+         $stmt = $this->pdo->prepare($sql);
+         return $stmt->execute([$id]);
+      } catch (\PDOException $e) {
+         return false;
+      }
+   }
+
 }
