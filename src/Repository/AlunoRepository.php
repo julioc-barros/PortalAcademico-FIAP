@@ -75,7 +75,7 @@ class AlunoRepository
    }
 
    /**
-    * Busca um aluno ativo pelo CPF. Usado para validar a RN05.
+    * Busca um aluno ativo pelo CPF.
     */
    public function findByCpf(string $cpf): ?Aluno
    {
@@ -88,7 +88,7 @@ class AlunoRepository
    }
 
    /**
-    * Busca um aluno ativo pelo E-mail. Usado para validar a RN05.
+    * Busca um aluno ativo pelo E-mail.
     */
    public function findByEmail(string $email): ?Aluno
    {
@@ -147,7 +147,6 @@ class AlunoRepository
 
       // Se uma nova senha foi fornecida, adiciona ela na query
       if (!empty($dados['senha'])) {
-         // RN08: Criptografar
          $hashSenha = password_hash($dados['senha'], PASSWORD_BCRYPT);
 
          $sql = "UPDATE alunos SET 

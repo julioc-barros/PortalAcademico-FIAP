@@ -18,9 +18,6 @@ class Aluno
    ) {
    }
 
-   /**
-    * Validação simples para a RN02
-    */
    public function validarNome(): bool
    {
       return mb_strlen(trim($this->nome)) >= 3;
