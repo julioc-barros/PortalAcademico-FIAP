@@ -3,6 +3,7 @@
 use PortalAcademicoFIAP\Controller\AdminController;
 use PortalAcademicoFIAP\Controller\AuthController;
 use PortalAcademicoFIAP\Controller\AlunoController;
+use PortalAcademicoFIAP\Controller\TurmaController;
 use PortalAcademicoFIAP\Service\Auth;
 
 $fullUri = $_SERVER['REQUEST_URI'];
@@ -34,7 +35,7 @@ $routes = [
    '/logout' => [
       'GET' => [AuthController::class, 'logout']
    ],
-   
+
    // CRUD Alunos 
    '/alunos' => [
       'GET' => [AlunoController::class, 'index'] // Listagem 
@@ -55,6 +56,28 @@ $routes = [
       'POST' => [AlunoController::class, 'delete'] // Excluir (Soft-delete) 
    ],
 
+   // CRUD Turmas
+   '/turmas' => [
+      'GET' => [TurmaController::class, 'index'] // Listagem
+   ],
+   '/turmas/novo' => [
+      'GET' => [TurmaController::class, 'create'] // Formulário de cadastro 
+   ],
+   '/turmas/salvar' => [
+      'POST' => [TurmaController::class, 'store'] // Salvar nova 
+   ],
+   '/turmas/editar' => [
+      'GET' => [TurmaController::class, 'edit'] // Formulário de edição 
+   ],
+   '/turmas/atualizar' => [
+      'POST' => [TurmaController::class, 'update'] // Atualizar existente 
+   ],
+   '/turmas/excluir' => [
+      'POST' => [TurmaController::class, 'delete'] // Excluir (Soft-delete) 
+   ],
+   '/turmas/visualizar' => [
+      'GET' => [TurmaController::class, 'show'] // Ver alunos da turma 
+   ],
 
 ];
 

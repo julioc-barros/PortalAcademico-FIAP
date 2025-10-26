@@ -28,6 +28,8 @@
                   <?= htmlspecialchars($turma->total_alunos); ?>
                </td>
                <td>
+                  <a href="<?= APP_URL ?>/turmas/visualizar?id=<?= htmlspecialchars($turma->id); ?>"
+                     class="btn btn-sm btn-outline-success">Visualizar Alunos</a>
                   <a href="<?= APP_URL ?>/turmas/editar?id=<?= htmlspecialchars($turma->id); ?>"
                      class="btn btn-sm btn-outline-primary">Editar</a>
                   <form action="<?= APP_URL ?>/turmas/excluir" method="POST" class="d-inline"
