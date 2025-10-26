@@ -1,4 +1,6 @@
-<?php require __DIR__ . '/../template/header.php'; ?>
+<?php require __DIR__ . '/../template/header.php';
+
+use PortalAcademicoFIAP\Service\Auth; ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
    <h1 class="h2">Gerenciamento de Alunos</h1>
@@ -27,15 +29,19 @@
                <td><?= htmlspecialchars($aluno->nome); ?></td>
                <td><?= htmlspecialchars($aluno->email); ?></td>
                <td><?= htmlspecialchars($aluno->cpf); ?></td>
-               <td>
-                  <a href="/alunos/editar?id=<?= $aluno->id; ?>" class="btn btn-sm btn-outline-primary">Editar</a>
+               <td class="action-buttons">
+                  <a href="<?= route('alunos.edit', ['id' => $aluno->id]) ?>" class="btn btn-sm btn-outline-primary"
+                     title="Editar Aluno">
+                     <i class="bi bi-pencil-square"></i>
+                  </a>
 
-                  <form action="/alunos/excluir" method="POST" class="d-inline"
+                  <form action="<?= route('alunos.delete') ?>" method="POST" class="d-inline"
                      onsubmit="return confirm('Tem certeza que deseja excluir este aluno?');">
-                     <input type="hidden" name="csrf_token"
-                        value="<?= \PortalAcademicoFIAP\Service\Auth::generateCsrfToken(); ?>">
+                     <input type="hidden" name="csrf_token" value="<?= Auth::generateCsrfToken(); ?>">
                      <input type="hidden" name="id" value="<?= $aluno->id; ?>">
-                     <button typea="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
+                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir Aluno">
+                        <i class="bi bi-trash3"></i>
+                     </button>
                   </form>
                </td>
             </tr>
@@ -44,4 +50,4 @@
    </table>
 </div>
 
-<?php require __DIR__ . '/../template/footer.php';?>
+<?php require __DIR__ . '/../template/footer.php'; ?>

@@ -1,4 +1,6 @@
-<?php require __DIR__ . '/../template/header.php'; // Inclui o topo ?>
+<?php require __DIR__ . '/../template/header.php'; // Inclui o topo 
+
+use PortalAcademicoFIAP\Service\Auth;?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
    <h1 class="h2">Gerenciamento de Turmas</h1>
@@ -27,16 +29,16 @@
                <td>
                   <?= htmlspecialchars($turma->total_alunos); ?>
                </td>
-               <td>
-                  <a href="<?= APP_URL ?>/turmas/visualizar?id=<?= htmlspecialchars($turma->id); ?>"
-                     class="btn btn-sm btn-outline-success">Visualizar Alunos</a>
-                  <a href="<?= APP_URL ?>/turmas/editar?id=<?= htmlspecialchars($turma->id); ?>"
+               <td class="action-buttons">
+                  <a href="<?= route('turmas.show', ['id' => $turma->id]) ?>" class="btn btn-sm btn-outline-info">Ver
+                     Alunos</a>
+                  <a href="<?= route('turmas.edit', ['id' => $turma->id]) ?>"
                      class="btn btn-sm btn-outline-primary">Editar</a>
-                  <form action="<?= APP_URL ?>/turmas/excluir" method="POST" class="d-inline"
+
+                  <form action="<?= route('turmas.delete') ?>" method="POST" class="d-inline"
                      onsubmit="return confirm('Tem certeza?');">
-                     <input type="hidden" name="csrf_token"
-                        value="<?= \PortalAcademicoFIAP\Service\Auth::generateCsrfToken(); ?>">
-                     <input type="hidden" name="id" value="<?= htmlspecialchars($turma->id); ?>">
+                     <input type="hidden" name="csrf_token" value="<?= Auth::generateCsrfToken(); ?>">
+                     <input type="hidden" name="id" value="<?= $turma->id; ?>">
                      <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
                   </form>
                </td>
