@@ -34,6 +34,26 @@ $routes = [
    '/logout' => [
       'GET' => [AuthController::class, 'logout']
    ],
+   
+   // CRUD Alunos 
+   '/alunos' => [
+      'GET' => [AlunoController::class, 'index'] // Listagem 
+   ],
+   '/alunos/novo' => [
+      'GET' => [AlunoController::class, 'create'] // Formulário de cadastro 
+   ],
+   '/alunos/salvar' => [
+      'POST' => [AlunoController::class, 'store'] // Salvar novo 
+   ],
+   '/alunos/editar' => [
+      'GET' => [AlunoController::class, 'edit'] // Formulário de edição 
+   ],
+   '/alunos/atualizar' => [
+      'POST' => [AlunoController::class, 'update'] // Atualizar existente 
+   ],
+   '/alunos/excluir' => [
+      'POST' => [AlunoController::class, 'delete'] // Excluir (Soft-delete) 
+   ],
 
 
 ];
