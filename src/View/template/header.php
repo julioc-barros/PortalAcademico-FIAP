@@ -381,6 +381,16 @@
          justify-content: flex-end;
          gap: 0.5rem;
       }
+
+      .action-btn {
+         background-color: var(--dark-bg-tertiary) !important;
+         color: var(--dark-text-primary) !important;
+         border: 1px solid var(--dark-border) !important;
+      }
+
+      .action-btn:hover {
+         background-color: var(--dark-bg-primary) !important;
+      }
    </style>
 </head>
 

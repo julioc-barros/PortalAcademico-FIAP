@@ -31,11 +31,12 @@ use PortalAcademicoFIAP\Service\Auth; ?>
                <td><?= htmlspecialchars($aluno->cpf); ?></td>
                <td class="action-buttons">
                   <a href="<?= route('alunos.matriculas', ['aluno_id' => $aluno->id]) ?>"
-                     class="btn btn-sm btn-outline-info" title="Gerenciar Matrículas">
-                     <i class="bi bi-person-lines-fill"></i>
+                     class="btn btn-sm action-btn" title="Gerenciar Matrículas" >
+                     <!-- <i class="bi bi-person-lines-fill"></i> -->
+                      Gerenciar Matriculas
                   </a>
 
-                  <a href="<?= route('alunos.edit', ['id' => $aluno->id]) ?>" class="btn btn-sm btn-outline-primary"
+                  <a href="<?= route('alunos.edit', ['id' => $aluno->id]) ?>" class="btn btn-sm action-btn"
                      title="Editar Aluno">
                      <i class="bi bi-pencil-square"></i>
                   </a>
