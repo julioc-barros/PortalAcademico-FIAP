@@ -34,12 +34,10 @@ class AlunoRepository
     */
    public function ContarAtivos(): int
    {
-      $sql = "SELECT count(1) AS total_ativos FROM alunos WHERE d_e_l_e_t_ = false;";
+      $sql = "SELECT count(1) FROM alunos WHERE d_e_l_e_t_ = false;";
       $stmt = $this->pdo->query($sql);
-
-      $resultQuery = $stmt->fetch(PDO::FETCH_ASSOC);
-
-      $contagemAtivos = $resultQuery["total_ativos"];
+      $contagemAtivos =  $stmt->fetchColumn(); // Função que busca apenas uma coluna
+      
       return $contagemAtivos;
    }
 
