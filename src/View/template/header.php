@@ -1,19 +1,36 @@
+<!-- header.php -->
+
 <?php use PortalAcademicoFIAP\Service\Auth; ?>
 <!DOCTYPE html>
 <html lang="pt-br" class="h-100">
 
 <head>
    <meta charset="UTF-M">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
    <title>Portal FIAP</title>
 
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="shortcut icon" type="imagex/png" href="/public/assets/img/favicon.ico">
+
+   <!-- jquery -->
+   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+   <!-- bootstrap -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
    <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
+   <!-- Fontes -->
+   <link rel='stylesheet' id='google-lora-css'
+      href='https://fonts.googleapis.com/css?family=Lora%3A400%2C700%2C700italic%2C400italic&#038;ver=4.9.15'
+      type='text/css' media='all' />
+   <link rel='stylesheet' id='google-roboto-css'
+      href='https://fonts.googleapis.com/css?family=Roboto%3A400%2C100%2C100italic%2C300%2C300italic%2C400italic%2C500%2C500italic%2C700%2C700italic%2C900%2C900italic&#038;ver=4.9.15'
+      type='text/css' media='all' />
+<!-- 
    <style>
       .navbar {
-         background-color: #ED145B;
+         background-color: #000;
       }
 
       /* Cor FIAP */
@@ -39,13 +56,17 @@
       main>.container {
          padding: 60px 15px 0;
       }
-   </style>
+   </style> -->
+
 </head>
 
 <body class="d-flex flex-column h-100">
 
-   <header>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+   <?php require __DIR__ . '/../template/navbar.php'; ?>
+   <?php require __DIR__ . '/../template/sidemenu.php'; ?>
+   <!-- <header> -->
+
+   <!-- <nav class="navbar navbar-expand-md navbar-dark fixed-top">
          <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="/">Portal Acadêmico FIAP</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -75,8 +96,10 @@
                </div>
             </div>
          </div>
-      </nav>
-   </header>
+      </nav> -->
+   <!-- </header> -->
 
-   <main class="flex-shrink-0">
-      <div class="container"></div>
+   <main class="container" style="padding-bottom: 2rem;">
+
+      <!-- <main class="flex-shrink-0">
+      <div class="container"></div> -->
