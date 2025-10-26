@@ -45,6 +45,22 @@ class TurmaRepository
    }
 
    /**
+    * Busca Contagem de todos os alunos ativos
+    */
+   public function ContarAtivos(): int
+   {
+      $sql = "SELECT   
+                  COUNT(*)
+               FROM turmas tur
+               WHERE 1=1
+               AND tur.d_e_l_e_t_ = false;";
+      $stmt = $this->pdo->query($sql);
+      $contagemAtivos = $stmt->fetchColumn(); // Função que busca apenas uma coluna
+
+      return $contagemAtivos;
+   }
+
+   /**
     * Função helper para converter um array do banco em um objeto Turma.
     */
    private function hidratarTurma(array $dados): Turma

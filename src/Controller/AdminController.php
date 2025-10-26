@@ -2,23 +2,25 @@
 namespace PortalAcademicoFIAP\Controller;
 
 use PortalAcademicoFIAP\Repository\AlunoRepository;
+use PortalAcademicoFIAP\Repository\TurmaRepository;
 
 class AdminController
 {
     /**
-     * Exibe a página principal (Dashboard) - (GET /)
+     * Exibe a página principal (Dashboard)
      */
     public function dashboard()
     {
-        // --- BUSCA DE DADOS (POR ENQUANTO, MOCKADO) ---
         $alunoRepo = new AlunoRepository();
+        $TurmaRepo = new TurmaRepository();
 
         $totalAlunos = $alunoRepo->ContarAtivos();
+        $totalTurmas = $TurmaRepo->ContarAtivos();
 
         // Vamos usar dados fixos por enquanto:
         $stats = [
             'total_alunos' => $totalAlunos,
-            'total_turmas' => 8,  // Do nosso dump
+            'total_turmas' => $totalTurmas,
             'total_matriculas' => 26 // Do nosso dump
         ];
 
