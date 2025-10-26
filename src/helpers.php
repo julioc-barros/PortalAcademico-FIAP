@@ -83,7 +83,6 @@ if (!function_exists('route')) {
 if (!function_exists('redirect')) {
    function redirect(string $url)
    {
-      // O helper route() já retorna a URL absoluta completa
       header('Location: ' . $url);
       exit;
    }
