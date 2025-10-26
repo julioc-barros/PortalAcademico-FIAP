@@ -1,3 +1,5 @@
+<?php use PortalAcademicoFIAP\Service\Auth; ?>
+
 <!DOCTYPE html>
 <html lang="pt-br" class="h-100">
 
@@ -395,7 +397,11 @@
 
 <body class="d-flex flex-column h-100">
 
-   <?php require __DIR__ . '/navbar.php'; // Carrega a barra do topo ?>
-   <?php require __DIR__ . '/sidemenu.php'; // Carrega o menu lateral ?>
+   <?php require __DIR__ . '/navbar.php';?>
+
+   <?php // SÓ CARREGA O SIDEMENU SE ESTIVER LOGADO ===
+   if (Auth::check()): ?>
+      <?php require __DIR__ . '/sidemenu.php';?>
+   <?php endif; ?>
 
    <main class="container">

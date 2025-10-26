@@ -3,7 +3,6 @@
 use PortalAcademicoFIAP\Controller\AdminController;
 use PortalAcademicoFIAP\Controller\AuthController;
 use PortalAcademicoFIAP\Controller\AlunoController;
-use PortalAcademicoFIAP\Controller\MatriculaController;
 use PortalAcademicoFIAP\Controller\TurmaController;
 use PortalAcademicoFIAP\Service\Auth;
 
@@ -142,23 +141,22 @@ if (array_key_exists($requestUri, $routes)) {
          if (method_exists($controller, $methodName)) {
             $controller->$methodName();
          } else {
-            http_response_code(500);
-            echo "Erro 500: Método '{$methodName}' não encontrado no controller '{$controllerName}'.";
+            http_response_code(500); // Internal Server Error
+            $errorMessage = "Método '{$methodName}' não encontrado no controller '{$controllerName}'.";
+            view('errors.500', ['errorMessage' => $errorMessage]); // Chama a view 500
          }
-
       } else {
-         http_response_code(500);
-         echo "Erro 500: Controller '{$controllerName}' não encontrado.";
+         http_response_code(500); // Internal Server Error
+         $errorMessage = "Controller '{$controllerName}' não encontrado.";
+         view('errors.500', ['errorMessage' => $errorMessage]); // Chama a view 500
       }
 
    } else {
-      http_response_code(405);
-      echo "<h1>405 - Método Não Permitido</h1>";
+      http_response_code(405); // Method Not Allowed
+      view('errors.404'); // Simplesmente mostra 404 para método não permitido
    }
 
 } else {
-   http_response_code(404);
-   echo "<h1>404 - Página Não Encontrada</h1>";
-   echo "A rota '{$requestUri}' não foi definida.";
-
+   http_response_code(404); // Not Found
+   view('errors.404'); // Chama a view 404
 }

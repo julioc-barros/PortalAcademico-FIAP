@@ -55,4 +55,13 @@ class MatriculaRepository
       }
    }
 
+   /**
+    * Conta o número total de matrículas existentes.
+    */
+   public function contarTotal(): int
+   {
+      $stmt = $this->pdo->query("SELECT COUNT(*) FROM matriculas");
+      return (int) $stmt->fetchColumn();
+   }
+
 }

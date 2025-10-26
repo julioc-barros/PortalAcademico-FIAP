@@ -55,5 +55,13 @@ define('APP_URL', $baseUrl); // Resultado: http://localhost
 try {
    require_once __DIR__ . '/../src/routes.php';
 } catch (\Exception $e) {
-   echo "Erro na aplicação: " . $e->getMessage();
+   http_response_code(500);
+   if (function_exists('view')) {
+      view('errors.500', ['errorMessage' => $e->getMessage()]);
+   } else {
+      echo "<h1>Erro 500 - Erro Interno do Servidor</h1>";
+      if (defined('APP_ENV') && APP_ENV === 'development') {
+         echo "<pre>" . htmlspecialchars($e->getMessage()) . "\n" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+      }
+   }
 }

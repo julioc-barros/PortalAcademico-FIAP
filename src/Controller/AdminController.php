@@ -3,6 +3,7 @@ namespace PortalAcademicoFIAP\Controller;
 
 use PortalAcademicoFIAP\Repository\AdminRepository;
 use PortalAcademicoFIAP\Repository\AlunoRepository;
+use PortalAcademicoFIAP\Repository\MatriculaRepository;
 use PortalAcademicoFIAP\Repository\TurmaRepository;
 use PortalAcademicoFIAP\Service\Auth;
 use PortalAcademicoFIAP\Service\FlashMessageService;
@@ -23,25 +24,25 @@ class AdminController
      */
     public function dashboard()
     {
-        $alunoRepo = new AlunoRepository();
-        $TurmaRepo = new TurmaRepository();
-
         $error = FlashMessageService::get('error');
         $success = FlashMessageService::get('success');
 
+        $alunoRepo = new AlunoRepository();
+        $turmaRepo = new TurmaRepository();
+        $matriculaRepo = new MatriculaRepository();
+
         $stats = [
-            "total_alunos" => $alunoRepo->ContarAtivos(),
-            "total_turmas" => $TurmaRepo->ContarAtivos(),
-            "total_matriculas" => 10,
+            'total_alunos' => $alunoRepo->ContarAtivos(),
+            'total_turmas' => $turmaRepo->ContarAtivos(),
+            'total_matriculas' => $matriculaRepo->contarTotal()
         ];
 
         view('admin.dashboard', [
-            'stats' => $stats,
+            'stats' => $stats, // Passa os dados reais
             'error' => $error,
             'success' => $success
         ]);
     }
-
     /**
      * Listagem de Admins (GET /admin/usuarios)
      */
