@@ -49,3 +49,33 @@ use PortalAcademicoFIAP\Service\Auth; ?>
 </div>
 
 <?php require __DIR__ . '/../template/footer.php'; ?>
+
+<script>
+   $(document).ready(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sucesso = urlParams.get('sucesso');
+      const erro = urlParams.get('erro');
+
+      if (sucesso) {
+         let text = '';
+         switch (sucesso) {
+            case '1': text = 'Turma cadastrada com sucesso!'; break;
+            case 'atualizado': text = 'Turma atualizada com sucesso!'; break;
+            case 'excluido': text = 'Turma excluída com sucesso!'; break;
+            default: text = 'Operação realizada com sucesso!';
+         }
+         Swal.fire({ title: 'Sucesso!', text: text, icon: 'success', background: 'var(--dark-bg-secondary)', color: 'var(--dark-text-primary)' });
+      }
+
+      if (erro) {
+         let text = '';
+         switch (erro) {
+            case 'id_invalido': text = 'ID inválido fornecido.'; break;
+            case 'turma_nao_encontrada': text = 'Turma não encontrada.'; break;
+            case 'excluir_falhou': text = 'Falha ao excluir a turma. Verifique se existem alunos matriculados nela.'; break;
+            default: text = decodeURIComponent(erro);
+         }
+         Swal.fire({ title: 'Erro!', text: text, icon: 'error', background: 'var(--dark-bg-secondary)', color: 'var(--dark-text-primary)' });
+      }
+   });
+</script>

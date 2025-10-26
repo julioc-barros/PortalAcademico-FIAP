@@ -67,3 +67,34 @@ use PortalAcademicoFIAP\Service\Auth; ?>
 </div>
 
 <?php require __DIR__ . '/../template/footer.php'; ?>
+
+<script>
+   $(document).ready(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sucesso = urlParams.get('sucesso');
+      const erro = urlParams.get('erro');
+
+      if (sucesso) {
+         let text = '';
+         switch (sucesso) {
+            case 'matriculado': text = 'Aluno matriculado na turma com sucesso!'; break;
+            case 'desmatriculado': text = 'Aluno desmatriculado da turma com sucesso!'; break;
+            default: text = 'Operação realizada com sucesso!';
+         }
+         Swal.fire({ title: 'Sucesso!', text: text, icon: 'success', background: 'var(--dark-bg-secondary)', color: 'var(--dark-text-primary)' });
+      }
+
+      if (erro) {
+         let text = decodeURIComponent(erro); // Pega a msg de erro da URL
+         // Verifica se é a RN04
+         if (text.includes('RN04')) {
+            text = 'Este aluno já está matriculado nesta turma.';
+         } else if (erro === 'falha_desmatricular') {
+            text = 'Não foi possível desmatricular o aluno.';
+         } else if (erro === 'invalido') {
+            text = 'Dados inválidos para matrícula.';
+         }
+         Swal.fire({ title: 'Erro!', text: text, icon: 'error', background: 'var(--dark-bg-secondary)', color: 'var(--dark-text-primary)' });
+      }
+   });
+</script>

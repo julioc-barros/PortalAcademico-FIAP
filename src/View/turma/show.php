@@ -50,3 +50,19 @@ use PortalAcademicoFIAP\Service\Auth; ?>
 <?php endif; ?>
 
 <?php require __DIR__ . '/../template/footer.php'; ?>
+
+<script>
+   $(document).ready(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sucesso = urlParams.get('sucesso');
+      const erro = urlParams.get('erro');
+
+      if (sucesso === 'desmatriculado') {
+         Swal.fire({ title: 'Sucesso!', text: 'Aluno desmatriculado da turma com sucesso!', icon: 'success', background: 'var(--dark-bg-secondary)', color: 'var(--dark-text-primary)' });
+      }
+
+      if (erro === 'falha_desmatricular') {
+         Swal.fire({ title: 'Erro!', text: 'Não foi possível desmatricular o aluno.', icon: 'error', background: 'var(--dark-bg-secondary)', color: 'var(--dark-text-primary)' });
+      }
+   });
+</script>

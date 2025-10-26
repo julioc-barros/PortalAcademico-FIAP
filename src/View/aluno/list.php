@@ -58,3 +58,35 @@ use PortalAcademicoFIAP\Service\Auth; ?>
 </div>
 
 <?php require __DIR__ . '/../template/footer.php'; ?>
+
+<script>
+   $(document).ready(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sucesso = urlParams.get('sucesso');
+      const erro = urlParams.get('erro');
+
+      if (sucesso) {
+         let title = 'Sucesso!';
+         let text = '';
+         switch (sucesso) {
+            case '1': text = 'Aluno cadastrado com sucesso!'; break;
+            case 'atualizado': text = 'Aluno atualizado com sucesso!'; break;
+            case 'excluido': text = 'Aluno excluído com sucesso!'; break;
+            default: text = 'Operação realizada com sucesso!';
+         }
+         Swal.fire({ title: title, text: text, icon: 'success', background: 'var(--dark-bg-secondary)', color: 'var(--dark-text-primary)' });
+      }
+
+      if (erro) {
+         let title = 'Erro!';
+         let text = '';
+         switch (erro) {
+            case 'id_invalido': text = 'ID inválido fornecido.'; break;
+            case 'aluno_nao_encontrado': text = 'Aluno não encontrado.'; break;
+            case 'excluir': text = 'Falha ao excluir o aluno.'; break;
+            default: text = decodeURIComponent(erro); // Para erros genéricos ou do banco
+         }
+         Swal.fire({ title: title, text: text, icon: 'error', background: 'var(--dark-bg-secondary)', color: 'var(--dark-text-primary)' });
+      }
+   });
+</script>
