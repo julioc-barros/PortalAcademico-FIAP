@@ -87,3 +87,29 @@ if (!function_exists('redirect')) {
       exit;
    }
 }
+
+/**
+ * Formata um CPF (apenas números) para o formato XXX.XXX.XXX-XX.
+ * Retorna o CPF original se ele não tiver 11 dígitos.
+ *
+ * @param string|null $cpf O CPF (apenas números)
+ * @return string O CPF formatado ou o original
+ */
+if (!function_exists('formatarCpf')) {
+   function formatarCpf(?string $cpf): string
+   {
+      // Remove qualquer caractere não numérico (segurança extra)
+      $cpfLimpo = preg_replace('/[^0-9]/', '', $cpf ?? '');
+
+      // Verifica se tem 11 dígitos
+      if (strlen($cpfLimpo) != 11) {
+         return $cpf ?? ''; // Retorna o original se inválido
+      }
+
+      // Aplica a máscara
+      return substr($cpfLimpo, 0, 3) . '.' .
+         substr($cpfLimpo, 3, 3) . '.' .
+         substr($cpfLimpo, 6, 3) . '-' .
+         substr($cpfLimpo, 9, 2);
+   }
+}

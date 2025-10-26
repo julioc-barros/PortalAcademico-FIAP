@@ -28,7 +28,7 @@ use PortalAcademicoFIAP\Service\Auth; ?>
             <tr>
                <td><?= htmlspecialchars($aluno->nome); ?></td>
                <td><?= htmlspecialchars($aluno->email); ?></td>
-               <td><?= htmlspecialchars($aluno->cpf); ?></td>
+               <td><?= htmlspecialchars(formatarCpf($aluno->cpf)); ?></td>
                <td class="action-buttons">
                   <a href="<?= route('alunos.matriculas', ['aluno_id' => $aluno->id]) ?>" class="btn btn-sm action-btn"
                      title="Gerenciar Matrículas">

@@ -26,6 +26,22 @@ class ComposerStaticInit0a775b96ef2338f1c99ec22602a7ca32
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'PortalAcademicoFIAP\\Controller\\AdminController' => __DIR__ . '/../..' . '/src/Controller/AdminController.php',
+        'PortalAcademicoFIAP\\Controller\\AlunoController' => __DIR__ . '/../..' . '/src/Controller/AlunoController.php',
+        'PortalAcademicoFIAP\\Controller\\AuthController' => __DIR__ . '/../..' . '/src/Controller/AuthController.php',
+        'PortalAcademicoFIAP\\Controller\\TurmaController' => __DIR__ . '/../..' . '/src/Controller/TurmaController.php',
+        'PortalAcademicoFIAP\\Model\\Administrador' => __DIR__ . '/../..' . '/src/Model/Administrador.php',
+        'PortalAcademicoFIAP\\Model\\Aluno' => __DIR__ . '/../..' . '/src/Model/Aluno.php',
+        'PortalAcademicoFIAP\\Model\\Turma' => __DIR__ . '/../..' . '/src/Model/Turma.php',
+        'PortalAcademicoFIAP\\Repository\\AdminRepository' => __DIR__ . '/../..' . '/src/Repository/AdminRepository.php',
+        'PortalAcademicoFIAP\\Repository\\AlunoRepository' => __DIR__ . '/../..' . '/src/Repository/AlunoRepository.php',
+        'PortalAcademicoFIAP\\Repository\\MatriculaRepository' => __DIR__ . '/../..' . '/src/Repository/MatriculaRepository.php',
+        'PortalAcademicoFIAP\\Repository\\TurmaRepository' => __DIR__ . '/../..' . '/src/Repository/TurmaRepository.php',
+        'PortalAcademicoFIAP\\Service\\AuditLogger' => __DIR__ . '/../..' . '/src/Service/AuditLogger.php',
+        'PortalAcademicoFIAP\\Service\\Auth' => __DIR__ . '/../..' . '/src/Service/Auth.php',
+        'PortalAcademicoFIAP\\Service\\Database' => __DIR__ . '/../..' . '/src/Service/Database.php',
+        'PortalAcademicoFIAP\\Service\\FlashMessageService' => __DIR__ . '/../..' . '/src/Service/FlashMessageService.php',
+        'PortalAcademicoFIAP\\Service\\ValidatorService' => __DIR__ . '/../..' . '/src/Service/ValidatorService.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
