@@ -8,11 +8,9 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
    $(document).ready(function () {
@@ -72,6 +70,36 @@
          collapseInstance.toggle();
          var isExpanded = $(this).attr('aria-expanded') === 'true';
          $(this).attr('aria-expanded', !isExpanded);
+      });
+   });
+</script>
+
+<script>
+   $(document).ready(function () {
+      // Intercepta o submit de QUALQUER formulário que tenha o atributo 'data-confirm'
+      $('form[data-confirm]').on('submit', function (e) {
+         e.preventDefault(); // Impede o envio normal do formulário
+
+         var form = this; // Guarda a referência do formulário
+         var message = $(form).data('confirm'); // Pega a mensagem do atributo
+
+         Swal.fire({
+            title: 'Atenção!',
+            text: message, // Usa a mensagem personalizada
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'var(--dark-danger)', // Usa a cor do dark theme
+            cancelButtonColor: '#6c757d', // Cinza padrão do Bootstrap
+            confirmButtonText: 'Sim, continuar!',
+            cancelButtonText: 'Cancelar',
+            background: 'var(--dark-bg-secondary)', // Fundo do modal
+            color: 'var(--dark-text-primary)' // Cor do texto
+         }).then((result) => {
+            if (result.isConfirmed) {
+               // Se o usuário confirmou, envia o formulário
+               form.submit();
+            }
+         });
       });
    });
 </script>

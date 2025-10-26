@@ -30,10 +30,9 @@ use PortalAcademicoFIAP\Service\Auth; ?>
                <td><?= htmlspecialchars($aluno->email); ?></td>
                <td><?= htmlspecialchars($aluno->cpf); ?></td>
                <td class="action-buttons">
-                  <a href="<?= route('alunos.matriculas', ['aluno_id' => $aluno->id]) ?>"
-                     class="btn btn-sm action-btn" title="Gerenciar Matrículas" >
-                     <!-- <i class="bi bi-person-lines-fill"></i> -->
-                      Gerenciar Matriculas
+                  <a href="<?= route('alunos.matriculas', ['aluno_id' => $aluno->id]) ?>" class="btn btn-sm action-btn"
+                     title="Gerenciar Matrículas">
+                     Gerenciar Matriculas
                   </a>
 
                   <a href="<?= route('alunos.edit', ['id' => $aluno->id]) ?>" class="btn btn-sm action-btn"
@@ -42,7 +41,7 @@ use PortalAcademicoFIAP\Service\Auth; ?>
                   </a>
 
                   <form action="<?= route('alunos.delete') ?>" method="POST" class="d-inline"
-                     onsubmit="return confirm('Tem certeza que deseja excluir este aluno?');">
+                     data-confirm="Tem certeza que deseja excluir este aluno? Esta ação marcará o aluno como inativo.">
                      <input type="hidden" name="csrf_token" value="<?= Auth::generateCsrfToken(); ?>">
                      <input type="hidden" name="id" value="<?= $aluno->id; ?>">
                      <input type="hidden" name="redirect_url"

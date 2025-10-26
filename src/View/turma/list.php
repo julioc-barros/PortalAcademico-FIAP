@@ -32,11 +32,11 @@ use PortalAcademicoFIAP\Service\Auth; ?>
                <td class="action-buttons">
                   <a href="<?= route('turmas.show', ['id' => $turma->id]) ?>" class="btn btn-sm action-btn">Ver
                      Alunos</a>
-                  <a href="<?= route('turmas.edit', ['id' => $turma->id]) ?>"
-                     class="btn btn-sm action-btn"><i class="bi bi-pencil-square"></i></a>
+                  <a href="<?= route('turmas.edit', ['id' => $turma->id]) ?>" class="btn btn-sm action-btn"><i
+                        class="bi bi-pencil-square"></i></a>
 
                   <form action="<?= route('turmas.delete') ?>" method="POST" class="d-inline"
-                     onsubmit="return confirm('Tem certeza?');">
+                     data-confirm="Tem certeza? Apenas turmas sem alunos podem ser excluídas. Esta ação marcará a turma como inativa.">
                      <input type="hidden" name="csrf_token" value="<?= Auth::generateCsrfToken(); ?>">
                      <input type="hidden" name="id" value="<?= $turma->id; ?>">
                      <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash3"></i></button>

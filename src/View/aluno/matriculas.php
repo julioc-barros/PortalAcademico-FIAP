@@ -1,6 +1,6 @@
-<?php require __DIR__ . '/../template/header.php'; 
+<?php require __DIR__ . '/../template/header.php';
 
-use PortalAcademicoFIAP\Service\Auth;?>
+use PortalAcademicoFIAP\Service\Auth; ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
    <h1 class="h2">Gerenciar Matrículas de: <?= htmlspecialchars($aluno->nome); ?></h1>
@@ -22,9 +22,8 @@ use PortalAcademicoFIAP\Service\Auth;?>
                   <span><?= htmlspecialchars($turma->nome); ?></span>
 
                   <form action="<?= route('alunos.desmatricular') ?>" method="POST" class="d-inline"
-                     onsubmit="return confirm('Tem certeza que deseja desmatricular este aluno da turma <?= htmlspecialchars(addslashes($turma->nome)); ?>?');">
-                     <input type="hidden" name="csrf_token"
-                        value="<?= Auth::generateCsrfToken();?>">
+                     data-confirm="Tem certeza que deseja desmatricular este aluno da turma <?= htmlspecialchars(addslashes($turma->nome)); ?>?">
+                     <input type="hidden" name="csrf_token" value="<?= Auth::generateCsrfToken(); ?>">
                      <input type="hidden" name="aluno_id" value="<?= htmlspecialchars($aluno->id); ?>">
                      <input type="hidden" name="turma_id" value="<?= htmlspecialchars($turma->id); ?>">
                      <input type="hidden" name="redirect_url" value="<?= route('turmas.show', ['id' => $turma->id]) ?>">

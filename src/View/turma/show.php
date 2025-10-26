@@ -1,6 +1,6 @@
 <?php require __DIR__ . '/../template/header.php';
 
-use PortalAcademicoFIAP\Service\Auth;?>
+use PortalAcademicoFIAP\Service\Auth; ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
    <h1 class="h2">Alunos da Turma: <?= htmlspecialchars($turma->nome); ?></h1>
@@ -31,7 +31,7 @@ use PortalAcademicoFIAP\Service\Auth;?>
                   <td><?= htmlspecialchars($aluno->cpf); ?></td>
                   <td>
                      <form action="<?= route('alunos.desmatricular') ?>" method="POST" class="d-inline"
-                        onsubmit="return confirm('Tem certeza que deseja desmatricular <?= htmlspecialchars(addslashes($aluno->nome)); ?> desta turma?');">
+                        data-confirm="Tem certeza que deseja desmatricular <?= htmlspecialchars(addslashes($aluno->nome)); ?> desta turma?">
                         <input type="hidden" name="csrf_token" value="<?= Auth::generateCsrfToken(); ?>">
                         <input type="hidden" name="aluno_id" value="<?= htmlspecialchars($aluno->id); ?>">
                         <input type="hidden" name="turma_id" value="<?= htmlspecialchars($turma->id); ?>">
