@@ -106,9 +106,9 @@ class AlunoController
 
       if ($this->repository->atualizar($dados)) {
          AuditLogger::log(Auth::id(), "Atualizou dados do aluno ID: {$dados['id']}");
-         redirect('/alunos?sucesso=atualizado');
+         redirect(route('alunos.index', ['sucesso' => 'atualizado']));
       } else {
-         redirect('/alunos/editar?id=' . $dados['id'] . '&erro=1');
+         redirect(route('alunos.edit', ['id' => $dados['id'], 'erro' => 1]));
       }
    }
 
