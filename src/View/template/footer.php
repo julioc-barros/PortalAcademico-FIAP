@@ -16,7 +16,6 @@
 <script>
    $(document).ready(function () {
       // Aplica o DataTables em qualquer tabela com o ID 'tabela-dados'
-      // Isso atende RN01 (ordem), RN09 (paginação) e RN10 (busca) automaticamente.
       $('#tabela-dados').DataTable({
          "language": {
             "url": "https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json"
