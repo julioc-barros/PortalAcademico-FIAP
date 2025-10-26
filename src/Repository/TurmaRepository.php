@@ -45,6 +45,23 @@ class TurmaRepository
    }
 
    /**
+    * Busca todas as turmas ativas (para dropdowns).
+    * @return Turma[]
+    */
+   public function buscarTodasAtivas(): array
+   {
+      $sql = "SELECT * FROM turmas WHERE d_e_l_e_t_ = false ORDER BY nome ASC";
+      $stmt = $this->pdo->query($sql);
+
+      $turmas = [];
+      while ($dados = $stmt->fetch(PDO::FETCH_ASSOC)) {
+         // Não precisa de contagem, usa o construtor simples
+         $turmas[] = new Turma($dados['id'], $dados['nome'], $dados['descricao']);
+      }
+      return $turmas;
+   }
+
+   /**
     * Busca Contagem de todos os alunos ativos
     */
    public function ContarAtivos(): int
