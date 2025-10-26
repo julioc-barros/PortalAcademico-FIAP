@@ -19,7 +19,7 @@ class AlunoRepository
     */
    public function buscarTodosAtivos(): array
    {
-      $sql = "SELECT id, nome, data_nascimento, cpf, email, d_e_l_e_t_ FROM alunos WHERE d_e_l_e_t_ = false ORDER BY nome ASC";
+      $sql = "SELECT id, nome, data_nascimento, cpf, email, d_e_l_e_t_ FROM alunos WHERE d_e_l_e_t_ = false ORDER BY nome ASC;";
       $stmt = $this->pdo->query($sql);
 
       $alunos = [];
@@ -27,6 +27,20 @@ class AlunoRepository
          $alunos[] = $this->hidratarAluno($dados);
       }
       return $alunos;
+   }
+
+   /**
+    * Busca Contagem de todos os alunos ativos
+    */
+   public function ContarAtivos(): int
+   {
+      $sql = "SELECT count(1) AS total_ativos FROM alunos WHERE d_e_l_e_t_ = false;";
+      $stmt = $this->pdo->query($sql);
+
+      $resultQuery = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      $contagemAtivos = $resultQuery["total_ativos"];
+      return $contagemAtivos;
    }
 
    /**
