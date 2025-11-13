@@ -5,7 +5,7 @@
 ## 🌐 Live Demo
 
 Uma versão funcional desta aplicação está disponível em:
-**[portalfiap.juliocbarros.tech](https://portalfiap.juliocbarros.tech)** *(Pode levar alguns instantes para carregar inicialmente)*
+**[portalfiap.cbarros.dev.br](https://portalfiap.cbarros.dev.br)** *(Pode levar alguns instantes para carregar inicialmente)*
 
 ## 📝 Descrição
 
